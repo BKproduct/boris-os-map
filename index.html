@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boris OS — System Map</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --red: #f85149;
+    --blue: #58a6ff;
+    --purple: #bc8cff;
+    --orange: #ffa657;
+    --cyan: #39d353;
+    --money: #3fb950;
+    --leverage: #58a6ff;
+    --network: #bc8cff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    padding: 20px 32px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+  }
+
+  .header-left h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .header-left p {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .header-right {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .legend-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* NORTH STAR BANNER */
+  .north-star {
+    background: linear-gradient(135deg, #0d2137 0%, #1a1a2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .north-star .label {
+    color: var(--yellow);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 10px;
+  }
+
+  .north-star .value {
+    color: var(--text);
+  }
+
+  .north-star .filters {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+  }
+
+  .filter-tag {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .filter-money { background: rgba(63,185,80,0.15); color: var(--money); border: 1px solid rgba(63,185,80,0.3); }
+  .filter-leverage { background: rgba(88,166,255,0.15); color: var(--leverage); border: 1px solid rgba(88,166,255,0.3); }
+  .filter-network { background: rgba(188,140,255,0.15); color: var(--network); border: 1px solid rgba(188,140,255,0.3); }
+
+  /* MAIN LAYOUT */
+  .main {
+    padding: 24px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* LAYER */
+  .layer {
+    margin-bottom: 24px;
+  }
+
+  .layer-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .layer-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+  }
+
+  .layer-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* CARDS GRID */
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    min-width: 200px;
+    max-width: 280px;
+    flex: 1;
+  }
+
+  .card:hover {
+    border-color: var(--blue);
+    background: var(--bg3);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(88,166,255,0.12);
+  }
+
+  .card.active {
+    border-color: var(--blue);
+    background: var(--bg3);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .status-badge {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 3px;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+  .status-active { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .status-paused { background: var(--yellow); }
+  .status-gap { background: var(--red); }
+  .status-new { background: var(--blue); box-shadow: 0 0 6px var(--blue); }
+
+  .card-desc {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .tag {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    background: var(--bg);
+  }
+
+  .tag-trigger { border-color: rgba(88,166,255,0.4); color: var(--blue); background: rgba(88,166,255,0.08); }
+  .tag-model { border-color: rgba(188,140,255,0.4); color: var(--purple); background: rgba(188,140,255,0.08); }
+  .tag-money { border-color: rgba(63,185,80,0.4); color: var(--money); background: rgba(63,185,80,0.08); }
+  .tag-leverage { border-color: rgba(88,166,255,0.4); color: var(--leverage); background: rgba(88,166,255,0.08); }
+
+  /* PROJECT CARDS — wider */
+  .card.project-card {
+    min-width: 220px;
+    max-width: 320px;
+  }
+
+  /* DETAIL PANEL */
+  .detail-panel {
+    position: fixed;
+    right: 0; top: 0; bottom: 0;
+    width: 360px;
+    background: var(--bg2);
+    border-left: 1px solid var(--border);
+    z-index: 200;
+    transform: translateX(100%);
+    transition: transform 0.2s ease;
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  .detail-panel.open {
+    transform: translateX(0);
+  }
+
+  .panel-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: sticky;
+    top: 0;
+    background: var(--bg2);
+  }
+
+  .panel-title { font-size: 15px; font-weight: 600; }
+  .panel-status { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+  .close-btn {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .close-btn:hover { color: var(--text); }
+
+  .panel-body { padding: 20px; }
+
+  .panel-section {
+    margin-bottom: 20px;
+  }
+
+  .panel-section h3 {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .panel-section p, .panel-section li {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .panel-section ul { padding-left: 16px; }
+
+  .file-link {
+    display: block;
+    font-size: 11px;
+    color: var(--blue);
+    font-family: monospace;
+    padding: 4px 8px;
+    background: var(--bg);
+    border-radius: 4px;
+    margin-bottom: 4px;
+    border: 1px solid var(--border);
+    word-break: break-all;
+  }
+
+  .cmd {
+    display: block;
+    font-size: 11px;
+    color: var(--cyan);
+    font-family: monospace;
+    padding: 4px 8px;
+    background: var(--bg);
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+
+  /* OVERLAY */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 190;
+    display: none;
+  }
+  .overlay.show { display: block; }
+
+  /* FLOW ARROWS */
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .arrow {
+    color: var(--text-dim);
+    font-size: 16px;
+  }
+
+  .flow-node {
+    padding: 4px 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: flex;
+    gap: 16px;
+    padding: 14px 32px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .stat-green .stat-value { color: var(--green); }
+  .stat-yellow .stat-value { color: var(--yellow); }
+  .stat-blue .stat-value { color: var(--blue); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .main { padding: 16px; }
+    .header { padding: 14px 16px; }
+    .detail-panel { width: 100%; }
+    .stats-row { padding: 12px 16px; }
+    .north-star { padding: 10px 16px; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <h1>⬡ Boris OS — System Map</h1>
+    <p>North Star 2026: £300K/year — Strategic Architect</p>
+  </div>
+  <div class="header-right">
+    <span class="legend-dot"><span class="dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></span> Active</span>
+    <span class="legend-dot"><span class="dot" style="background:var(--yellow)"></span> Paused</span>
+    <span class="legend-dot"><span class="dot" style="background:var(--blue);box-shadow:0 0 5px var(--blue)"></span> New</span>
+    <span class="legend-dot"><span class="dot" style="background:var(--red)"></span> Gap</span>
+  </div>
+</div>
+
+<!-- NORTH STAR / PRIORITY FILTER -->
+<div class="north-star">
+  <span class="label">Priority</span>
+  <div class="filters">
+    <span class="filter-tag filter-money">💰 MONEY</span>
+    <span class="filter-tag filter-leverage">⚙️ LEVERAGE</span>
+    <span class="filter-tag filter-network">🤝 NETWORK</span>
+  </div>
+  <span style="color:var(--text-dim);font-size:11px;margin-left:8px">Order: MONEY › LEVERAGE › NETWORK › everything else</span>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat stat-green"><span class="stat-value">4</span><span class="stat-label">Active Skills</span></div>
+  <div class="stat stat-yellow"><span class="stat-value">2</span><span class="stat-label">Paused Projects</span></div>
+  <div class="stat stat-blue"><span class="stat-value">3</span><span class="stat-label">New Skills</span></div>
+  <div class="stat"><span class="stat-value">33</span><span class="stat-label">TG Channels</span></div>
+  <div class="stat"><span class="stat-value">3</span><span class="stat-label">Email Accounts</span></div>
+  <div class="stat"><span class="stat-value">14</span><span class="stat-label">MCP Servers</span></div>
+  <div class="stat"><span class="stat-value">Sonnet</span><span class="stat-label">Default Model</span></div>
+</div>
+
+<div class="main">
+
+  <!-- LAYER: DAILY INTELLIGENCE -->
+  <div class="layer">
+    <div class="layer-header">
+      <span class="layer-title">Daily Intelligence</span>
+      <div class="layer-line"></div>
+    </div>
+    <div class="cards">
+      <div class="card" onclick="openPanel('start-day')">
+        <div class="card-header">
+          <span class="card-title">Start the Day</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">Morning briefing pipeline. Email ×3, Telegram ×33, Calendar → 4 scored packets → Telegram Saved Messages.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">07:30 London</span>
+          <span class="tag tag-model">Haiku + Sonnet</span>
+          <span class="tag tag-leverage">⚙️ LEVERAGE</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('email')">
+        <div class="card-header">
+          <span class="card-title">Email Accounts ×3</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">NGED (ms365), AAS (gmail), Personal (gmail). Routed by project and priority.</div>
+        <div class="card-tags">
+          <span class="tag">nged.africa</span>
+          <span class="tag">ai-automation.studio</span>
+          <span class="tag">1302095</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('telegram-sources')">
+        <div class="card-header">
+          <span class="card-title">Telegram Sources ×33</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">33 channels: AI news, Growth, Automation, Trends. Batched ×5 parallel. 18h lookback.</div>
+        <div class="card-tags">
+          <span class="tag tag-model">Haiku batches</span>
+          <span class="tag">5 parallel groups</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('calendar')">
+        <div class="card-header">
+          <span class="card-title">Google Calendar</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">Today + tomorrow lookahead. Feeds Day Plan packet.</div>
+        <div class="card-tags">
+          <span class="tag">gcal MCP</span>
+          <span class="tag">1302095 account</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER: KNOWLEDGE SYSTEM -->
+  <div class="layer">
+    <div class="layer-header">
+      <span class="layer-title">Knowledge System</span>
+      <div class="layer-line"></div>
+    </div>
+    <div class="cards">
+      <div class="card" onclick="openPanel('kb-update')">
+        <div class="card-header">
+          <span class="card-title">Weekly KB Update</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">Scans Vebinars, Bubble, TG ×33, YouTube → writes to 2 KBs. Auto-runs after Start the Day.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">"обнови KB"</span>
+          <span class="tag tag-model">Haiku extraction</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('automation-kb')">
+        <div class="card-header">
+          <span class="card-title">Automation KB</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">Reusable automation patterns for AAS client projects. GDrive Shared.</div>
+        <div class="card-tags">
+          <span class="tag">AAS Shared Drive</span>
+          <span class="tag">n8n, Make, AI agents</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('growth-kb')">
+        <div class="card-header">
+          <span class="card-title">Growth KB</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">Client acquisition, content marketing, personal brand patterns. Personal GDrive.</div>
+        <div class="card-tags">
+          <span class="tag">Personal Drive</span>
+          <span class="tag">monthly rollup</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('continuous-learning')">
+        <div class="card-header">
+          <span class="card-title">Continuous Learning</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">Extracts reusable patterns from sessions. Error resolutions, corrections, workarounds.</div>
+        <div class="card-tags">
+          <span class="tag">learned/INDEX.md</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER: MARKETING DEPARTMENT -->
+  <div class="layer">
+    <div class="layer-header">
+      <span class="layer-title">Marketing Department</span>
+      <div class="layer-line"></div>
+    </div>
+    <div class="cards">
+      <div class="card" onclick="openPanel('marketing-dept')">
+        <div class="card-header">
+          <span class="card-title">Marketing OS</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">3-level dept: Boris Brand + Project Marketing (AAS/NGED) + Client Marketing. Strategic hub.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">"content queue"</span>
+          <span class="tag tag-leverage">⚙️ NEW</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('content-queue')">
+        <div class="card-header">
+          <span class="card-title">Content Queue</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Backlog → This Week → In Production → Published. Single source of truth for all content.</div>
+        <div class="card-tags">
+          <span class="tag">content-queue.md</span>
+          <span class="tag">Monday planning</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('reelsfactory')">
+        <div class="card-header">
+          <span class="card-title">ReelsFactory Pipeline</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">Types A/B/C1/C2/D/E. ElevenLabs ✅ D-ID ❌ Kling ✅. Multi-agent Kumar pipeline.</div>
+        <div class="card-tags">
+          <span class="tag">orchestrator.py</span>
+          <span class="tag">ElevenLabs Starter</span>
+          <span class="tag tag-money">💰 AAS leads</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER: PROJECTS -->
+  <div class="layer">
+    <div class="layer-header">
+      <span class="layer-title">Projects</span>
+      <div class="layer-line"></div>
+    </div>
+    <div class="cards">
+      <div class="card project-card" onclick="openPanel('nged')">
+        <div class="card-header">
+          <span class="card-title">NGED.Africa</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">AI-powered blended education, Kenya base. Grants + research partnerships + CSR funding.</div>
+        <div class="card-tags">
+          <span class="tag tag-money">💰 PRIMARY</span>
+          <span class="tag">DfE autumn 2026</span>
+          <span class="tag">Asan, Mario, Isak</span>
+        </div>
+      </div>
+      <div class="card project-card" onclick="openPanel('aas')">
+        <div class="card-header">
+          <span class="card-title">AI Automation Studio</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">AI chatbots and automation for SMB clients. Retainers + project fees.</div>
+        <div class="card-tags">
+          <span class="tag tag-money">💰 ACTIVE</span>
+          <span class="tag">client pipeline</span>
+          <span class="tag">boris.korol@ai-automation.studio</span>
+        </div>
+      </div>
+      <div class="card project-card" onclick="openPanel('healthcopilot')">
+        <div class="card-header">
+          <span class="card-title">HealthCopilot</span>
+          <span class="status-badge status-paused"></span>
+        </div>
+        <div class="card-desc">AI health assistant bot. MVP done. Waiting on Евгений (Dubai) response.</div>
+        <div class="card-tags">
+          <span class="tag" style="color:var(--yellow)">PAUSED</span>
+          <span class="tag">resume: Евгений replies</span>
+        </div>
+      </div>
+      <div class="card project-card" onclick="openPanel('culturecurious')">
+        <div class="card-header">
+          <span class="card-title">CultureCurious</span>
+          <span class="status-badge status-paused"></span>
+        </div>
+        <div class="card-desc">CRM enrichment for art collectors. One-pager sent to Алина Дейви (Sotheby's).</div>
+        <div class="card-tags">
+          <span class="tag" style="color:var(--yellow)">PAUSED</span>
+          <span class="tag">resume: Alina replies</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER: SYSTEM LAYER -->
+  <div class="layer">
+    <div class="layer-header">
+      <span class="layer-title">System Layer</span>
+      <div class="layer-line"></div>
+    </div>
+    <div class="cards">
+      <div class="card" onclick="openPanel('workspace-reflection')">
+        <div class="card-header">
+          <span class="card-title">Workspace Reflection</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">Bi-weekly system audit. Reviews skills, MCPs, rules, folder hygiene, TG, email.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">every other Monday</span>
+          <span class="tag">REFLECTIONS/</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('memory')">
+        <div class="card-header">
+          <span class="card-title">Memory System</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">4 types: user, feedback, project, reference. Persists across conversations. MEMORY.md index.</div>
+        <div class="card-tags">
+          <span class="tag">~/.claude/projects/.../memory/</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('mcp')">
+        <div class="card-header">
+          <span class="card-title">MCP Servers ×14</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">Email ×3, Telegram, Notion, Figma, Firecrawl, Apify, Playwright, Calendar, Perplexity + project-specific.</div>
+        <div class="card-tags">
+          <span class="tag">Claude Code native</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('model-routing')">
+        <div class="card-header">
+          <span class="card-title">Model Routing</span>
+          <span class="status-badge status-active"></span>
+        </div>
+        <div class="card-desc">Haiku (extraction/scoring) → Sonnet (default) → Opus (explicit only). Cost-aware.</div>
+        <div class="card-tags">
+          <span class="tag tag-model">Opus = 8× Haiku</span>
+          <span class="tag">MODEL_ROUTING.md</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER: ADVISORY & PLANNING (NEW) -->
+  <div class="layer">
+    <div class="layer-header">
+      <span class="layer-title">Advisory &amp; Planning (New)</span>
+      <div class="layer-line"></div>
+    </div>
+    <div class="cards">
+      <div class="card" onclick="openPanel('advisory-board')">
+        <div class="card-header">
+          <span class="card-title">Advisory Board</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">4 parallel expert sub-agents: Strategic Architect, Commercial Director, Domain Analyst-Researcher, Product Critic.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">"advisory board"</span>
+          <span class="tag tag-model">Opus</span>
+          <span class="tag tag-leverage">⚙️ NEW</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('weekly-rhythm')">
+        <div class="card-header">
+          <span class="card-title">Weekly Rhythm</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Structured retro + planning. Sources: project states, start-day output. No GitHub dependency.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">"weekly review"</span>
+          <span class="tag">MONEY › LEVERAGE filter</span>
+          <span class="tag tag-leverage">⚙️ NEW</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('cc-analytics')">
+        <div class="card-header">
+          <span class="card-title">Usage Analytics</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">HTML report from Claude history. Project breakdown + cost estimate per project.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">"cc analytics"</span>
+          <span class="tag">~/.claude/history.jsonl</span>
+          <span class="tag tag-leverage">⚙️ NEW</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detailPanel">
+  <div class="panel-header">
+    <div>
+      <div class="panel-title" id="panelTitle">—</div>
+      <div class="panel-status" id="panelStatus">—</div>
+    </div>
+    <button class="close-btn" onclick="closePanel()">✕</button>
+  </div>
+  <div class="panel-body" id="panelBody"></div>
+</div>
+
+<script>
+const data = {
+  'start-day': {
+    title: 'Start the Day',
+    status: '🟢 Active — runs 07:30 London time',
+    sections: [
+      { h: 'What it does', body: 'Full morning briefing pipeline. Ingests email (3 accounts), Telegram channels (33), calendar. Scores all signals, builds 4 packets, delivers to Telegram Saved Messages.' },
+      { h: 'Scoring formula', body: 'score = (importance×0.30) + (urgency×0.25) + (deal_impact×0.20) + (personal_relevance×0.15) + (source_trust×0.10) × recency_factor × topic_multiplier × repetition_penalty' },
+      { h: 'Output packets', body: '<ul><li>💰 Deals (≥60) — max 5</li><li>📅 Day Plan (≥50) — max 3</li><li>📰 News (≥80) — max 5</li><li>📨 Follow-ups (≥65) — max 8</li></ul>' },
+      { h: 'Trigger', body: '"Start the day", "Старт дня", "Доброе утро, старт"' },
+      { h: 'Key files', files: ['/Users/bk/Work/.tools/start-day/config.yaml', '/Users/bk/Work/.tools/start-day/memory/user_profile.json', '/Users/bk/Work/.tools/start-day/memory/news_rules.yaml'] }
+    ]
+  },
+  'email': {
+    title: 'Email Accounts ×3',
+    status: '🟢 Active — via MCP',
+    sections: [
+      { h: 'Accounts', body: '<ul><li><b>Boris.Korol@nged.africa</b> — ms365 MCP — NGED, grants, Africa</li><li><b>boris.korol@ai-automation.studio</b> — gmail MCP — AAS, clients</li><li><b>1302095@gmail.com</b> — gmail_personal MCP — Personal, KB</li></ul>' },
+      { h: 'Note', body: 'ms365 (NGED) only accessible in Claude.ai web, not Claude Code CLI.' },
+      { h: 'Rules', files: ['/Users/bk/Work/.cursor/rules/email-mcp.mdc', '/Users/bk/Work/.cursor/rules/nged-email-signature.mdc'] }
+    ]
+  },
+  'telegram-sources': {
+    title: 'Telegram Sources ×33',
+    status: '🟢 Active — batched parallel',
+    sections: [
+      { h: 'Categories', body: '<ul><li>AI News: КирИИлл, Нейронавт, Tips AI, НейроProfit</li><li>Growth/Marketing: Wiseman Talks, Илья Измайлов, Solokumi, STPNV AI</li><li>Trends/Products: Products And Startups, CG Event, Oestick</li><li>+24 more channels</li></ul>' },
+      { h: 'Config', body: '5 parallel batches • 10 posts/channel max • 18h lookback' },
+      { h: 'File', files: ['/Users/bk/Work/.cursor/skills/weekly-kb-update/channels.json'] }
+    ]
+  },
+  'calendar': {
+    title: 'Google Calendar',
+    status: '🟢 Active — gcal MCP',
+    sections: [
+      { h: 'Config', body: 'Account: 1302095@gmail.com\nLookahead: today + 1 day\nFeeds: Day Plan packet in Start the Day' },
+      { h: 'MCP', body: 'user-calendar_personal' }
+    ]
+  },
+  'kb-update': {
+    title: 'Weekly KB Update',
+    status: '🟢 Active — auto-runs after Start the Day',
+    sections: [
+      { h: 'Sources', body: '<ul><li>Vebinars-cases (GDrive Shared)</li><li>Bubble Transcribes (webinars only)</li><li>YouTube (Apple Note + subscriptions)</li><li>Telegram ×33 channels (5 batches, Haiku)</li></ul>' },
+      { h: 'Output', body: 'Writes to 2 KBs simultaneously:\n• Automation KB (GDrive Shared)\n• Growth KB (Personal GDrive)' },
+      { h: 'Trigger', body: '"обнови KB", "KB update", "update knowledge base"' },
+      { h: 'Files', files: ['/Users/bk/Work/.cursor/skills/weekly-kb-update/SKILL.md'] }
+    ]
+  },
+  'automation-kb': {
+    title: 'Automation KB',
+    status: '🟢 Active',
+    sections: [
+      { h: 'Purpose', body: 'Reusable automation patterns for AAS client projects: n8n, Make, AI agents, CRM automation.' },
+      { h: 'Path', files: ['/Users/bk/Work/GDrive-AI-Studio-Shared/All docs AAStudio/AAS development/knowledge base/'] },
+      { h: 'Format', body: '{topic-keyword}_{source-short}_{YYYY-MM}.md\nTracked by .manifest.json' }
+    ]
+  },
+  'growth-kb': {
+    title: 'Growth KB',
+    status: '🟢 Active',
+    sections: [
+      { h: 'Purpose', body: 'Client acquisition, content marketing, personal brand, partnerships — for AAS growth.' },
+      { h: 'Path', files: ['/Users/bk/My Drive (1302095@gmail.com)/AI automation /KB-ASS Grow/'] },
+      { h: 'Format', body: 'Rolling monthly file: growth-kb-{YYYY-MM}.md\nAll entries appended.' }
+    ]
+  },
+  'continuous-learning': {
+    title: 'Continuous Learning',
+    status: '🟢 Active',
+    sections: [
+      { h: 'Purpose', body: 'Extracts reusable patterns from sessions: error resolutions, corrections, workarounds, debugging techniques, project-specific patterns.' },
+      { h: 'Path', files: ['/Users/bk/Work/.cursor/skills/continuous-learning/learned/', '/Users/bk/Work/.cursor/skills/continuous-learning/learned/INDEX.md'] }
+    ]
+  },
+  'marketing-dept': {
+    title: 'Marketing Department',
+    status: '🔵 New — created 2026-03-29',
+    sections: [
+      { h: 'Three levels', body: '<ul><li><b>Boris Brand</b> — AI, automation, building in public</li><li><b>Project Marketing</b> — AAS lead gen + NGED positioning</li><li><b>Client Marketing</b> — reusable playbooks for AAS clients</li></ul>' },
+      { h: 'Trigger', body: '"content queue", "что постить", "рилы на неделю", "marketing plan"' },
+      { h: 'Key files', files: ['/Users/bk/Work/PROJECTS/Marketing/MARKETING_OS.md', '/Users/bk/Work/PROJECTS/Marketing/content-queue.md', '/Users/bk/Work/.cursor/skills/marketing-dept/SKILL.md'] }
+    ]
+  },
+  'content-queue': {
+    title: 'Content Queue',
+    status: '🔵 New — created 2026-03-29',
+    sections: [
+      { h: 'Structure', body: '<ul><li>📦 Backlog — all ideas, no date</li><li>🗓 This Week — 3 items, set Monday</li><li>🔥 In Production — running in pipeline</li><li>✅ Published — with metrics</li></ul>' },
+      { h: 'Weekly rhythm', body: 'Every Monday: pull 3 from Backlog → This Week\nMon–Thu: produce 1 reel/day\nFri: review metrics → update Backlog' },
+      { h: 'File', files: ['/Users/bk/Work/PROJECTS/Marketing/content-queue.md'] }
+    ]
+  },
+  'reelsfactory': {
+    title: 'ReelsFactory Pipeline',
+    status: '🟢 Active — under Marketing Dept',
+    sections: [
+      { h: 'Reel types', body: '<ul><li>A — Screen demo (Playwright DM)</li><li>B — Talking head (D-ID) ❌ credits exhausted</li><li>C1 — Photo + voiceover (PIL + ElevenLabs)</li><li>C2 — Chat bubbles (PIL)</li><li>D — Kinetic typography ✅</li><li>E — Anime via Kling AI</li></ul>' },
+      { h: 'API status', body: 'ElevenLabs: ✅ Starter unlimited\nD-ID: ❌ 12 credits used — needs $5.90 top-up\nKling: Browser mode (needs Chrome CDP port 9222)' },
+      { h: 'Commands', cmds: ['cd /Users/bk/Work/PROJECTS/AI-Automation/ReelsFactory', 'python orchestrator.py --type d', 'python modules/pipeline.py --type d'] },
+      { h: 'Analytics', cmds: ['python scripts/track_analytics.py --weekly'] }
+    ]
+  },
+  'nged': {
+    title: 'NGED.Africa — PRIMARY',
+    status: '🟢 Active — PRIMARY project 2026',
+    sections: [
+      { h: 'Goal', body: 'AI-powered blended education for Africa. Kenya base, Nigeria/South Africa/Burkina Faso/Oman pipeline. Grants + research partnerships + CSR/foundation funding.' },
+      { h: 'Key path', files: ['/Users/bk/Work/PROJECTS/NGED.A/'] },
+      { h: 'Key contacts', body: 'Asan, Mario, Isak Frumin (Constructor University — ex-World Bank)' },
+      { h: 'Blockers', body: '<ul><li>No measurable pilot data</li><li>No UK partner identified</li><li>Not registered on Find a Tender</li></ul>' },
+      { h: 'Next actions', body: '<ul><li>Follow up with Isak Frumin — network names request</li><li>Register on Find a Tender (GOV.UK One Login)</li><li>Collect pilot data from Russia/Kyrgyzstan/Cyprus</li></ul>' },
+      { h: 'Email', body: 'Boris.Korol@nged.africa (ms365)' }
+    ]
+  },
+  'aas': {
+    title: 'AI Automation Studio',
+    status: '🟢 Active',
+    sections: [
+      { h: 'Goal', body: 'AI chatbots and automation for UK/EU SMB clients. Retainers + project fees. Primary revenue engine.' },
+      { h: 'Email', body: 'boris.korol@ai-automation.studio (gmail MCP)' },
+      { h: 'Logo rule', files: ['/Users/bk/Work/.cursor/rules/ai-automation-logo.mdc'] }
+    ]
+  },
+  'healthcopilot': {
+    title: 'HealthCopilot',
+    status: '🟡 Paused — waiting Евгений (Dubai)',
+    sections: [
+      { h: 'Status', body: 'MVP done. Bot scaffolded. Pitch deck v3 done. Q&A sent to Евгений.' },
+      { h: 'Resume trigger', body: 'Евгений responds with interest OR Boris explicitly reactivates.' },
+      { h: 'Path', files: ['/Users/bk/Work/PROJECTS/HealthCopilot/'] }
+    ]
+  },
+  'culturecurious': {
+    title: 'CultureCurious',
+    status: '🟡 Paused — waiting Алина Дейви (Sotheby\'s)',
+    sections: [
+      { h: 'Status', body: 'One-pager sent to Алина Дейви. Waiting for response.' },
+      { h: 'Resume trigger', body: 'Alina responds OR Boris explicitly reactivates.' },
+      { h: 'Path', files: ['/Users/bk/Work/PROJECTS/CultureCurious/'] }
+    ]
+  },
+  'workspace-reflection': {
+    title: 'Workspace Reflection',
+    status: '🟢 Active — every other Monday',
+    sections: [
+      { h: 'What it audits', body: '<ul><li>Agent transcripts</li><li>Skills — used, missing</li><li>MCPs — active, to add</li><li>Rules — new patterns</li><li>Folders — loose files, stale projects</li><li>Telegram + Email cleanup</li></ul>' },
+      { h: 'Output path', files: ['/Users/bk/Work/OPERATING/REFLECTIONS/'] },
+      { h: 'Trigger', body: '"workspace reflection", "workflow review", "system audit"' }
+    ]
+  },
+  'memory': {
+    title: 'Memory System',
+    status: '🟢 Active',
+    sections: [
+      { h: 'Types', body: '<ul><li><b>user</b> — role, preferences, knowledge</li><li><b>feedback</b> — corrections and confirmed approaches</li><li><b>project</b> — ongoing work, goals, blockers</li><li><b>reference</b> — external resource pointers</li></ul>' },
+      { h: 'Path', files: ['/Users/bk/.claude/projects/-Users-bk-Work/memory/', '/Users/bk/.claude/projects/-Users-bk-Work/memory/MEMORY.md'] }
+    ]
+  },
+  'mcp': {
+    title: 'MCP Servers ×14',
+    status: '🟢 Active',
+    sections: [
+      { h: 'Active servers', body: '<ul><li>ms365 — NGED email</li><li>gmail — AAS email</li><li>gmail_personal — Personal</li><li>telegram-mcp — TG read/write</li><li>notion — Notion DB</li><li>figma — Design files</li><li>firecrawl — Web scraping</li><li>apify — Web actors</li><li>perplexity — AI search</li><li>playwright — Browser automation</li><li>calendar_personal — Google Cal</li><li>cursor-ide-browser — In-Cursor browser</li><li>Clay — Contact enrichment</li><li>Gmail (claude.ai) — Additional gmail</li></ul>' }
+    ]
+  },
+  'model-routing': {
+    title: 'Model Routing',
+    status: '🟢 Active',
+    sections: [
+      { h: 'Rules', body: '<ul><li><b>Haiku</b> — extraction, classification, scoring, high-volume loops</li><li><b>Sonnet</b> — DEFAULT for everything else</li><li><b>Opus</b> — explicit only, strategic deep-work, board papers</li></ul>' },
+      { h: 'Cost signal', body: 'Opus = 8× Haiku = 1.7× Sonnet\nJustify Opus before using.' },
+      { h: 'File', files: ['/Users/bk/Work/OPERATING/MODEL_ROUTING.md', '/Users/bk/Work/.cursor/rules/model-routing.mdc'] }
+    ]
+  },
+  'advisory-board': {
+    title: 'Advisory Board',
+    status: '🔵 New skill — to be created',
+    sections: [
+      { h: 'Concept', body: 'Adapted from serejaris/ris-claude-code ceo-council. Launches 4 parallel expert sub-agents, each analyses the same decision independently, then synthesises.' },
+      { h: 'Roles', body: '<ul><li><b>Strategic Architect</b> — systems, structure, long-term</li><li><b>Commercial Director</b> — revenue, pricing, client pipeline</li><li><b>Domain Analyst-Researcher</b> — dynamic: becomes deep expert in project domain (EdTech for NGED, MarTech for AAS, etc.)</li><li><b>Product Critic</b> — challenges assumptions, finds flaws</li></ul>' },
+      { h: 'Integration', body: 'Uses Boris OS Decision Filter (3–4 YES → proceed)' },
+      { h: 'Trigger', body: '"advisory board", "совет директоров", "разбор решения"' },
+      { h: 'Model', body: 'Opus (deep reasoning required)' }
+    ]
+  },
+  'weekly-rhythm': {
+    title: 'Weekly Rhythm',
+    status: '🔵 New skill — to be created',
+    sections: [
+      { h: 'Concept', body: 'Adapted from serejaris weekly-retro + weekly-planning. No GitHub dependency.' },
+      { h: 'Sources', body: '<ul><li>Project _STATE.md files</li><li>Start the Day output cache</li><li>OPERATING/REFLECTIONS/</li><li>MEMORY.md</li></ul>' },
+      { h: 'Output', body: 'Weekly outcomes (not task lists) per project. Filtered by MONEY > LEVERAGE > NETWORK.' },
+      { h: 'Trigger', body: '"недельный ритм", "weekly review", "plan the week"' }
+    ]
+  },
+  'cc-analytics': {
+    title: 'Usage Analytics',
+    status: '🔵 New skill — to be created',
+    sections: [
+      { h: 'Concept', body: 'Adapted from serejaris cc-analytics. Parses ~/.claude/history.jsonl, generates HTML report.' },
+      { h: 'Additions vs original', body: '<ul><li>Project-specific breakdown (NGED / AAS / ReelsFactory)</li><li>Cost estimate ($) per project</li><li>Haiku vs Sonnet vs Opus split</li></ul>' },
+      { h: 'Source', body: '~/.claude/history.jsonl' },
+      { h: 'Trigger', body: '"cc analytics", "статистика", "сколько я трачу"' }
+    ]
+  }
+};
+
+function openPanel(id) {
+  const d = data[id];
+  if (!d) return;
+
+  document.getElementById('panelTitle').textContent = d.title;
+  document.getElementById('panelStatus').textContent = d.status;
+
+  let html = '';
+  for (const s of d.sections) {
+    html += `<div class="panel-section"><h3>${s.h}</h3>`;
+    if (s.body) html += `<p>${s.body}</p>`;
+    if (s.files) s.files.forEach(f => { html += `<span class="file-link">${f}</span>`; });
+    if (s.cmds) s.cmds.forEach(c => { html += `<span class="cmd">$ ${c}</span>`; });
+    html += `</div>`;
+  }
+
+  document.getElementById('panelBody').innerHTML = html;
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+}
+
+function closePanel() {
+  document.getElementById('detailPanel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+</script>
+</body>
+</html>
