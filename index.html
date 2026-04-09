@@ -314,26 +314,38 @@
 
   .panel-section ul { padding-left: 16px; }
 
-  .file-link, a.file-link {
-    display: block;
+  .file-link {
+    flex: 1;
     font-size: 11px;
     color: var(--blue);
     font-family: monospace;
     padding: 4px 8px;
     background: var(--bg);
     border-radius: 4px;
-    margin-bottom: 4px;
     border: 1px solid var(--border);
     word-break: break-all;
-    text-decoration: none;
+  }
+  .file-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .copy-btn {
+    flex-shrink: 0;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-family: monospace;
+    background: var(--bg3);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-radius: 4px;
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    white-space: nowrap;
   }
-  a.file-link:hover {
-    background: rgba(88,166,255,0.08);
-    border-color: var(--blue);
-    text-decoration: underline;
-  }
+  .copy-btn:hover { background: rgba(88,166,255,0.1); color: var(--blue); border-color: var(--blue); }
+  .copy-btn.copied { color: var(--green); border-color: var(--green); background: rgba(63,185,80,0.1); }
 
   .cmd {
     display: block;
@@ -1228,7 +1240,7 @@ function openPanel(id) {
   for (const s of d.sections) {
     html += `<div class="panel-section"><h3>${s.h}</h3>`;
     if (s.body) html += `<p>${s.body}</p>`;
-    if (s.files) s.files.forEach(f => { html += `<a href="vscode://file${f}" class="file-link" title="Open in editor">${f}</a>`; });
+    if (s.files) s.files.forEach(f => { html += `<div class="file-row"><span class="file-link">${f}</span><button class="copy-btn" onclick="copyPath(this,'${f.replace(/'/g,"\\'")}')">Copy</button></div>`; });
     if (s.cmds) s.cmds.forEach(c => { html += `<span class="cmd">$ ${c}</span>`; });
     html += `</div>`;
   }
@@ -1244,6 +1256,14 @@ function closePanel() {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closePanel(); });
+
+function copyPath(btn, path) {
+  navigator.clipboard.writeText(path).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1500);
+  });
+}
 </script>
 </body>
 </html>
