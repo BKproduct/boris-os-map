@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boris OS — System Map v3 (2026-04-09)</title>
+<title>Boris OS — System Map v3 EN (2026-04-09)</title>
 <style>
   :root {
     --bg: #0d1117;
@@ -34,7 +34,6 @@
     overflow-x: hidden;
   }
 
-  /* HEADER */
   .header {
     padding: 20px 32px 16px;
     border-bottom: 1px solid var(--border);
@@ -47,18 +46,8 @@
     z-index: 100;
   }
 
-  .header-left h1 {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: 0.02em;
-  }
-
-  .header-left p {
-    font-size: 11px;
-    color: var(--text-dim);
-    margin-top: 2px;
-  }
+  .header-left h1 { font-size: 18px; font-weight: 600; color: var(--text); letter-spacing: 0.02em; }
+  .header-left p { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
 
   .header-right {
     display: flex;
@@ -68,19 +57,9 @@
     color: var(--text-dim);
   }
 
-  .legend-dot {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
+  .legend-dot { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  /* NORTH STAR BANNER */
   .north-star {
     background: linear-gradient(135deg, #0d2137 0%, #1a1a2e 100%);
     border-bottom: 1px solid var(--border);
@@ -91,182 +70,113 @@
     font-size: 12px;
   }
 
-  .north-star .label {
-    color: var(--yellow);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 10px;
-  }
+  .north-star .label { color: var(--yellow); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; }
 
-  .north-star .value {
-    color: var(--text);
-  }
-
-  .north-star .filters {
-    margin-left: auto;
-    display: flex;
-    gap: 12px;
-  }
-
+  .filters { display: flex; gap: 8px; }
   .filter-tag {
-    padding: 2px 8px;
-    border-radius: 4px;
+    padding: 2px 10px;
+    border-radius: 20px;
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.05em;
+    cursor: pointer;
   }
+  .filter-money { background: rgba(63,185,80,0.15); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+  .filter-leverage { background: rgba(88,166,255,0.15); color: var(--blue); border: 1px solid rgba(88,166,255,0.3); }
+  .filter-network { background: rgba(188,140,255,0.15); color: var(--purple); border: 1px solid rgba(188,140,255,0.3); }
 
-  .filter-money { background: rgba(63,185,80,0.15); color: var(--money); border: 1px solid rgba(63,185,80,0.3); }
-  .filter-leverage { background: rgba(88,166,255,0.15); color: var(--leverage); border: 1px solid rgba(88,166,255,0.3); }
-  .filter-network { background: rgba(188,140,255,0.15); color: var(--network); border: 1px solid rgba(188,140,255,0.3); }
-
-  /* MAIN LAYOUT */
-  .main {
-    padding: 24px 32px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  /* LAYER */
-  .layer {
-    margin-bottom: 24px;
-  }
-
-  .layer-header {
+  .stats-row {
+    padding: 12px 32px;
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
+    gap: 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    overflow-x: auto;
   }
 
-  .layer-title {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-dim);
-  }
+  .stat { display: flex; flex-direction: column; align-items: center; min-width: 60px; }
+  .stat-value { font-size: 20px; font-weight: 700; }
+  .stat-label { font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em; }
+  .stat-green .stat-value { color: var(--green); }
+  .stat-yellow .stat-value { color: var(--yellow); }
+  .stat-blue .stat-value { color: var(--blue); }
 
-  .layer-line {
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
+  .main { padding: 24px 32px; max-width: 1400px; }
 
-  /* CARDS GRID */
-  .cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+  .layer { margin-bottom: 32px; }
+  .layer-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .layer-title { font-size: 11px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
+  .layer-line { flex: 1; height: 1px; background: var(--border); }
 
-  /* CARD */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+
   .card {
     background: var(--bg2);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 14px 16px;
+    padding: 16px;
     cursor: pointer;
-    transition: all 0.15s ease;
-    position: relative;
-    min-width: 200px;
-    max-width: 280px;
-    flex: 1;
+    transition: border-color 0.2s, background 0.2s;
   }
+  .card:hover { border-color: var(--blue); background: var(--bg3); }
+  .project-card { border-left: 3px solid var(--blue); }
 
-  .card:hover {
-    border-color: var(--blue);
-    background: var(--bg3);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(88,166,255,0.12);
-  }
-
-  .card.active {
-    border-color: var(--blue);
-    background: var(--bg3);
-  }
-
-  .card-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 8px;
-  }
-
-  .card-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    line-height: 1.3;
-  }
-
-  .status-badge {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    margin-top: 3px;
-    flex-shrink: 0;
-    margin-left: 8px;
-  }
-  .status-active { background: var(--green); box-shadow: 0 0 6px var(--green); }
-  .status-paused { background: var(--yellow); }
-  .status-gap { background: var(--red); }
-  .status-new { background: var(--blue); box-shadow: 0 0 6px var(--blue); }
-
-  .card-desc {
-    font-size: 11px;
-    color: var(--text-dim);
-    line-height: 1.5;
-    margin-bottom: 8px;
-  }
-
-  .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-top: 8px;
-  }
+  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .card-title { font-size: 13px; font-weight: 600; }
+  .card-desc { font-size: 11px; color: var(--text-dim); line-height: 1.6; margin-bottom: 10px; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
 
   .tag {
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 3px;
-    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 9px;
+    font-weight: 500;
+    background: var(--bg3);
     color: var(--text-dim);
-    background: var(--bg);
+    border: 1px solid var(--border);
+    letter-spacing: 0.04em;
   }
+  .tag-money { background: rgba(63,185,80,0.1); color: var(--green); border-color: rgba(63,185,80,0.3); }
+  .tag-leverage { background: rgba(88,166,255,0.1); color: var(--blue); border-color: rgba(88,166,255,0.3); }
+  .tag-network { background: rgba(188,140,255,0.1); color: var(--purple); border-color: rgba(188,140,255,0.3); }
+  .tag-model { background: rgba(255,166,87,0.1); color: var(--orange); border-color: rgba(255,166,87,0.3); }
+  .tag-trigger { background: rgba(57,211,83,0.1); color: var(--cyan); border-color: rgba(57,211,83,0.3); font-family: monospace; }
+  .tag-ceo { background: rgba(210,153,34,0.15); color: var(--yellow); border-color: rgba(210,153,34,0.3); }
 
-  .tag-trigger { border-color: rgba(88,166,255,0.4); color: var(--blue); background: rgba(88,166,255,0.08); }
-  .tag-model { border-color: rgba(188,140,255,0.4); color: var(--purple); background: rgba(188,140,255,0.08); }
-  .tag-money { border-color: rgba(63,185,80,0.4); color: var(--money); background: rgba(63,185,80,0.08); }
-  .tag-leverage { border-color: rgba(88,166,255,0.4); color: var(--leverage); background: rgba(88,166,255,0.08); }
+  .status-badge { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+  .status-active { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .status-paused { background: var(--yellow); }
+  .status-new { background: var(--blue); box-shadow: 0 0 6px var(--blue); }
+  .status-ceo { width: 10px; height: 10px; border-radius: 50%; background: #d29922; box-shadow: 0 0 8px #d29922; display: inline-block; }
 
-  /* PROJECT CARDS — wider */
-  .card.project-card {
-    min-width: 220px;
-    max-width: 320px;
+  .card-ceo { border-color: #d29922 !important; background: linear-gradient(135deg, #1a1600 0%, #21262d 100%); }
+  .layer-myteam .layer-title { color: var(--yellow); }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
   }
+  .overlay.show { display: block; }
 
-  /* DETAIL PANEL */
   .detail-panel {
     position: fixed;
-    right: 0; top: 0; bottom: 0;
-    width: 360px;
+    right: -420px;
+    top: 0;
+    width: 420px;
+    height: 100vh;
     background: var(--bg2);
     border-left: 1px solid var(--border);
-    z-index: 200;
-    transform: translateX(100%);
-    transition: transform 0.2s ease;
+    z-index: 300;
+    transition: right 0.3s ease;
     overflow-y: auto;
-    padding: 0;
   }
-
-  .detail-panel.open {
-    transform: translateX(0);
-  }
+  .detail-panel.open { right: 0; }
 
   .panel-header {
-    padding: 20px;
+    padding: 20px 24px 16px;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -275,44 +185,17 @@
     top: 0;
     background: var(--bg2);
   }
-
   .panel-title { font-size: 15px; font-weight: 600; }
   .panel-status { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
-
-  .close-btn {
-    background: none;
-    border: none;
-    color: var(--text-dim);
-    cursor: pointer;
-    font-size: 18px;
-    padding: 0;
-    line-height: 1;
-  }
-
+  .close-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 18px; padding: 0; line-height: 1; }
   .close-btn:hover { color: var(--text); }
 
-  .panel-body { padding: 20px; }
-
-  .panel-section {
-    margin-bottom: 20px;
-  }
-
-  .panel-section h3 {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-dim);
-    margin-bottom: 8px;
-    font-weight: 600;
-  }
-
-  .panel-section p, .panel-section li {
-    font-size: 12px;
-    color: var(--text);
-    line-height: 1.6;
-  }
-
-  .panel-section ul { padding-left: 16px; }
+  .panel-body { padding: 20px 24px; }
+  .panel-section { margin-bottom: 20px; }
+  .panel-section h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 8px; font-weight: 600; }
+  .panel-section p { font-size: 12px; line-height: 1.7; color: var(--text); white-space: pre-line; }
+  .panel-section ul, .panel-section ol { font-size: 12px; line-height: 1.7; color: var(--text); padding-left: 16px; }
+  .panel-section li { margin-bottom: 3px; }
 
   .file-link, a.file-link {
     display: block;
@@ -329,104 +212,20 @@
     cursor: pointer;
     transition: background 0.15s, border-color 0.15s;
   }
-  a.file-link:hover {
-    background: rgba(88,166,255,0.08);
-    border-color: var(--blue);
-    text-decoration: underline;
-  }
+  a.file-link:hover { background: rgba(88,166,255,0.08); border-color: var(--blue); text-decoration: underline; }
 
   .cmd {
     display: block;
     font-size: 11px;
-    color: var(--cyan);
+    color: var(--green);
     font-family: monospace;
     padding: 4px 8px;
     background: var(--bg);
     border-radius: 4px;
-    border: 1px solid var(--border);
     margin-bottom: 4px;
-  }
-
-  /* OVERLAY */
-  .overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 190;
-    display: none;
-  }
-  .overlay.show { display: block; }
-
-  /* FLOW ARROWS */
-  .flow-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-  }
-
-  .arrow {
-    color: var(--text-dim);
-    font-size: 16px;
-  }
-
-  .flow-node {
-    padding: 4px 10px;
-    background: var(--bg3);
     border: 1px solid var(--border);
-    border-radius: 4px;
-    font-size: 11px;
-    color: var(--text-dim);
   }
 
-  /* STATS ROW */
-  .stats-row {
-    display: flex;
-    gap: 16px;
-    padding: 14px 32px;
-    border-bottom: 1px solid var(--border);
-    flex-wrap: wrap;
-  }
-
-  .stat {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .stat-value {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .stat-label {
-    font-size: 10px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .stat-green .stat-value { color: var(--green); }
-  .stat-yellow .stat-value { color: var(--yellow); }
-  .stat-blue .stat-value { color: var(--blue); }
-
-  /* CEO special badge */
-  .status-ceo {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: #d29922;
-    box-shadow: 0 0 8px #d29922;
-    display: inline-block;
-  }
-  .card-ceo {
-    border-color: #d29922 !important;
-    background: linear-gradient(135deg, #1a1600 0%, #21262d 100%);
-  }
-  .tag-ceo { background: rgba(210,153,34,0.15); color: #d29922; border-color: rgba(210,153,34,0.3); }
-  .layer-myteam .layer-title { color: var(--yellow); }
-
-  /* MOBILE */
   @media (max-width: 768px) {
     .main { padding: 16px; }
     .header { padding: 14px 16px; }
@@ -442,7 +241,7 @@
 <div class="header">
   <div class="header-left">
     <h1>⬡ Boris OS — System Map</h1>
-    <p>North Star 2026: £1M/year — Strategic Architect · v3 · 2026-04-09</p>
+    <p>North Star 2026: £1M/year — Strategic Architect · v3 EN · 2026-04-09</p>
   </div>
   <div class="header-right">
     <span class="legend-dot"><span class="dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></span> Active</span>
@@ -488,7 +287,7 @@
           <span class="card-title">Start the Day</span>
           <span class="status-badge status-active"></span>
         </div>
-        <div class="card-desc">Morning briefing pipeline. Email ×3, Telegram ×33, Calendar → 4 scored packets → Telegram Saved Messages.</div>
+        <div class="card-desc">Morning briefing pipeline. 3 email accounts, 33 Telegram channels, calendar → 4 scored packets → Telegram Saved Messages.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">07:30 London</span>
           <span class="tag tag-model">Haiku + Sonnet</span>
@@ -546,7 +345,7 @@
         </div>
         <div class="card-desc">Scans Vebinars, Bubble, TG ×33, YouTube → writes to 2 KBs. Auto-runs after Start the Day.</div>
         <div class="card-tags">
-          <span class="tag tag-trigger">"обнови KB"</span>
+          <span class="tag tag-trigger">"update KB"</span>
           <span class="tag tag-model">Haiku extraction</span>
         </div>
       </div>
@@ -595,18 +394,18 @@
       <div class="card" onclick="openPanel('marketing-dept')">
         <div class="card-header">
           <span class="card-title">Marketing OS</span>
-          <span class="status-badge status-new"></span>
+          <span class="status-badge status-active"></span>
         </div>
         <div class="card-desc">3-level dept: Boris Brand + Project Marketing (AAS/NGED) + Client Marketing. Strategic hub.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">"content queue"</span>
-          <span class="tag tag-leverage">⚙️ NEW</span>
+          <span class="tag tag-leverage">⚙️ LEVERAGE</span>
         </div>
       </div>
       <div class="card" onclick="openPanel('content-queue')">
         <div class="card-header">
           <span class="card-title">Content Queue</span>
-          <span class="status-badge status-new"></span>
+          <span class="status-badge status-active"></span>
         </div>
         <div class="card-desc">Backlog → This Week → In Production → Published. Single source of truth for all content.</div>
         <div class="card-tags">
@@ -653,7 +452,7 @@
           <span class="card-title">AI Automation Studio</span>
           <span class="status-badge status-active"></span>
         </div>
-        <div class="card-desc">AI chatbots and automation for SMB clients. Retainers + project fees.</div>
+        <div class="card-desc">AI chatbots and automation for SMB clients. Fractional CAIO positioning. £3k–£15k projects.</div>
         <div class="card-tags">
           <span class="tag tag-money">💰 ACTIVE</span>
           <span class="tag">client pipeline</span>
@@ -665,10 +464,10 @@
           <span class="card-title">HealthCopilot</span>
           <span class="status-badge status-paused"></span>
         </div>
-        <div class="card-desc">AI health assistant bot. MVP done. Waiting on Евгений (Dubai) response.</div>
+        <div class="card-desc">AI health assistant bot. MVP done. Waiting on Evgeny (Dubai) response.</div>
         <div class="card-tags">
           <span class="tag" style="color:var(--yellow)">PAUSED</span>
-          <span class="tag">resume: Евгений replies</span>
+          <span class="tag">resume: Evgeny replies</span>
         </div>
       </div>
       <div class="card project-card" onclick="openPanel('culturecurious')">
@@ -676,7 +475,7 @@
           <span class="card-title">CultureCurious</span>
           <span class="status-badge status-paused"></span>
         </div>
-        <div class="card-desc">CRM enrichment for art collectors. One-pager sent to Алина Дейви (Sotheby's).</div>
+        <div class="card-desc">CRM enrichment for art collectors. One-pager sent to Alina Dayvi (Sotheby's).</div>
         <div class="card-tags">
           <span class="tag" style="color:var(--yellow)">PAUSED</span>
           <span class="tag">resume: Alina replies</span>
@@ -718,9 +517,10 @@
           <span class="card-title">MCP Servers ×14</span>
           <span class="status-badge status-active"></span>
         </div>
-        <div class="card-desc">Email ×3, Telegram, Notion, Figma, Firecrawl, Apify, Playwright, Calendar, Perplexity + project-specific.</div>
+        <div class="card-desc">Email ×3, Telegram, Notion, Figma, Firecrawl, Apify, Playwright, Calendar + 3 custom MCPs in build.</div>
         <div class="card-tags">
           <span class="tag">Claude Code native</span>
+          <span class="tag">3 custom in build</span>
         </div>
       </div>
       <div class="card" onclick="openPanel('model-routing')">
@@ -728,7 +528,7 @@
           <span class="card-title">Model Routing</span>
           <span class="status-badge status-active"></span>
         </div>
-        <div class="card-desc">Haiku (extraction/scoring) → Sonnet (default) → Opus (explicit only). Cost-aware.</div>
+        <div class="card-desc">Haiku (extraction/scoring) → Sonnet (default) → Opus (Team + explicit). Cost-aware.</div>
         <div class="card-tags">
           <span class="tag tag-model">Opus = 8× Haiku</span>
           <span class="tag">MODEL_ROUTING.md</span>
@@ -745,13 +545,12 @@
     </div>
     <div class="cards">
 
-      <!-- CEO — top validator, gold card -->
       <div class="card card-ceo" onclick="openPanel('agent-ceo')">
         <div class="card-header">
           <span class="card-title">CEO — Validator</span>
           <span class="status-ceo"></span>
         </div>
-        <div class="card-desc">Метавалидатор над командой. Теория игр, байесовское мышление, когнитивные искажения ×30+. Проверяет каждый ответ: данные, источники, логика, галлюцинации. &lt;80% → на доработку. Противоречия → 🚩</div>
+        <div class="card-desc">Meta-validator above the team. Game theory, Bayesian thinking, cognitive biases ×30+. Validates every agent response: data, sources, logic, hallucinations. &lt;80% → revision. Contradictions → 🚩</div>
         <div class="card-tags">
           <span class="tag tag-ceo">Quality Gate</span>
           <span class="tag tag-ceo">Max 2 revision loops</span>
@@ -764,7 +563,7 @@
           <span class="card-title">CMO — Marketing</span>
           <span class="status-badge status-new"></span>
         </div>
-        <div class="card-desc">Контент, аутрич, личный бренд, AAS leads. Управляет content-queue, ReelsFactory, Wix-outreach pipeline.</div>
+        <div class="card-desc">Content, outreach, personal brand, AAS leads. Manages content-queue, ReelsFactory, Wix-outreach pipeline.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">/cmo</span>
           <span class="tag tag-money">💰 MONEY</span>
@@ -777,7 +576,7 @@
           <span class="card-title">CTO — Infrastructure</span>
           <span class="status-badge status-new"></span>
         </div>
-        <div class="card-desc">Скрипты, MCP, vibe-coding, автоматизации. Никогда не строит сложное там, где работает простое.</div>
+        <div class="card-desc">Scripts, MCP, vibe-coding, automations. Never builds complex when simple works.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">/cto</span>
           <span class="tag tag-leverage">⚙️ LEVERAGE</span>
@@ -790,7 +589,7 @@
           <span class="card-title">BD — Sales &amp; Network</span>
           <span class="status-badge status-new"></span>
         </div>
-        <div class="card-desc">AAS pipeline, NGED гранты и партнёрства, нетворк. Знает тайминг и отношения. Clay + NETWORK/</div>
+        <div class="card-desc">AAS pipeline, NGED grants and partnerships, network. Knows timing and relationships. Clay + NETWORK/</div>
         <div class="card-tags">
           <span class="tag tag-trigger">/bd</span>
           <span class="tag tag-money">💰 MONEY</span>
@@ -803,10 +602,10 @@
           <span class="card-title">Coach — Development</span>
           <span class="status-badge status-new"></span>
         </div>
-        <div class="card-desc">Личное развитие по 4 осям ЗБР: vibe-coder, CEO, investor, culture. Принимает книги, YouTube, арт, оперу, фото. Рекомендует у верхней границы ЗБР.</div>
+        <div class="card-desc">Personal development across 4 ZPD axes: vibe-coder, CEO, investor, culture. Accepts books, YouTube, art, opera, photos. Recommends at the upper boundary of ZPD.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">/coach</span>
-          <span class="tag">4 ЗБР оси</span>
+          <span class="tag">4 ZPD axes</span>
           <span class="tag tag-leverage">⚙️ LEVERAGE</span>
         </div>
       </div>
@@ -816,7 +615,7 @@
           <span class="card-title">CFO — Finances</span>
           <span class="status-badge status-new"></span>
         </div>
-        <div class="card-desc">Портфель: акции, крипто, облигации, венчур. Принимает скриншоты (vision). Отслеживает новости, влияющие на позиции. Рекомендации по аллокации.</div>
+        <div class="card-desc">Portfolio: stocks, crypto, bonds, venture. Accepts screenshots (vision). Tracks news affecting positions. Allocation recommendations.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">/cfo</span>
           <span class="tag tag-money">💰 MONEY</span>
@@ -829,7 +628,7 @@
           <span class="card-title">Analyst — Research</span>
           <span class="status-badge status-new"></span>
         </div>
-        <div class="card-desc">Ресёрч с первичными источниками. EXA, Explee, Parallel AI, Firecrawl. Кросс-доменный анализ: как любая новость влияет на проекты, контакты, инвестиции, развитие.</div>
+        <div class="card-desc">Research with primary sources. EXA, Explee, Parallel AI, Firecrawl. Cross-domain analysis: how any signal affects projects, contacts, investments, development.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">/analyst</span>
           <span class="tag">EXA · Explee · Parallel</span>
@@ -842,9 +641,9 @@
           <span class="card-title">Telegram Interface</span>
           <span class="status-badge status-new"></span>
         </div>
-        <div class="card-desc">@ReelsFacBot · python-telegram-bot v21 · Hybrid mode: текст + кнопки действий. Boris одним тапом подтверждает — бот выполняет. Хостинг: Mac (тест).</div>
+        <div class="card-desc">@ReelsFacBot · python-telegram-bot v21 · Hybrid mode: text + action buttons. Boris confirms with one tap — bot executes. Hosting: Mac (test phase).</div>
         <div class="card-tags">
-          <span class="tag">/menu → выбор агента</span>
+          <span class="tag">/menu → select agent</span>
           <span class="tag">/team → consilium</span>
           <span class="tag">asyncio + Anthropic SDK</span>
         </div>
@@ -853,47 +652,44 @@
     </div>
   </div>
 
-  <!-- LAYER: ADVISORY & PLANNING (NEW) -->
+  <!-- LAYER: OPERATING SKILLS -->
   <div class="layer">
     <div class="layer-header">
-      <span class="layer-title">Advisory &amp; Planning (New)</span>
+      <span class="layer-title">Operating Skills</span>
       <div class="layer-line"></div>
     </div>
     <div class="cards">
       <div class="card" onclick="openPanel('advisory-board')">
         <div class="card-header">
           <span class="card-title">Advisory Board</span>
-          <span class="status-badge status-new"></span>
+          <span class="status-badge status-active"></span>
         </div>
-        <div class="card-desc">4 parallel expert sub-agents: Strategic Architect, Commercial Director, Domain Analyst-Researcher, Product Critic.</div>
+        <div class="card-desc">4 parallel expert sub-agents for strategic decision analysis. Precursor to My Team full build.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">"advisory board"</span>
           <span class="tag tag-model">Opus</span>
-          <span class="tag tag-leverage">⚙️ NEW</span>
         </div>
       </div>
       <div class="card" onclick="openPanel('weekly-rhythm')">
         <div class="card-header">
           <span class="card-title">Weekly Rhythm</span>
-          <span class="status-badge status-new"></span>
+          <span class="status-badge status-active"></span>
         </div>
-        <div class="card-desc">Structured retro + planning. Sources: project states, start-day output. No GitHub dependency.</div>
+        <div class="card-desc">Structured retro + planning. Sources: project states, start-day output. MONEY › LEVERAGE filter.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">"weekly review"</span>
-          <span class="tag">MONEY › LEVERAGE filter</span>
-          <span class="tag tag-leverage">⚙️ NEW</span>
+          <span class="tag">Monday ritual</span>
         </div>
       </div>
       <div class="card" onclick="openPanel('cc-analytics')">
         <div class="card-header">
           <span class="card-title">Usage Analytics</span>
-          <span class="status-badge status-new"></span>
+          <span class="status-badge status-active"></span>
         </div>
         <div class="card-desc">HTML report from Claude history. Project breakdown + cost estimate per project.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">"cc analytics"</span>
           <span class="tag">~/.claude/history.jsonl</span>
-          <span class="tag tag-leverage">⚙️ NEW</span>
         </div>
       </div>
     </div>
@@ -925,8 +721,8 @@ const data = {
       { h: 'What it does', body: 'Full morning briefing pipeline. Ingests email (3 accounts), Telegram channels (33), calendar. Scores all signals, builds 4 packets, delivers to Telegram Saved Messages.' },
       { h: 'Scoring formula', body: 'score = (importance×0.30) + (urgency×0.25) + (deal_impact×0.20) + (personal_relevance×0.15) + (source_trust×0.10) × recency_factor × topic_multiplier × repetition_penalty' },
       { h: 'Output packets', body: '<ul><li>💰 Deals (≥60) — max 5</li><li>📅 Day Plan (≥50) — max 3</li><li>📰 News (≥80) — max 5</li><li>📨 Follow-ups (≥65) — max 8</li></ul>' },
-      { h: 'Trigger', body: '"Start the day", "Старт дня", "Доброе утро, старт"' },
-      { h: 'Key files', files: ['/Users/bk/Work/.tools/start-day/config.yaml', '/Users/bk/Work/.tools/start-day/memory/user_profile.json', '/Users/bk/Work/.tools/start-day/memory/news_rules.yaml'] }
+      { h: 'Trigger', body: '"Start the day", "Good morning, start"' },
+      { h: 'Key files', files: ['/Users/bk/Work/.tools/start-day/config.yaml', '/Users/bk/Work/.tools/start-day/memory/user_profile.json'] }
     ]
   },
   'email': {
@@ -942,8 +738,8 @@ const data = {
     title: 'Telegram Sources ×33',
     status: '🟢 Active — batched parallel',
     sections: [
-      { h: 'Categories', body: '<ul><li>AI News: КирИИлл, Нейронавт, Tips AI, НейроProfit</li><li>Growth/Marketing: Wiseman Talks, Илья Измайлов, Solokumi, STPNV AI</li><li>Trends/Products: Products And Startups, CG Event, Oestick</li><li>+24 more channels</li></ul>' },
-      { h: 'Config', body: '5 parallel batches • 10 posts/channel max • 18h lookback' },
+      { h: 'Categories', body: '<ul><li>AI News: КирИИлл, Нейронавт, Tips AI, НейроProfit</li><li>Growth/Marketing: Wiseman Talks, Solokumi, STPNV AI</li><li>Trends/Products: Products And Startups, CG Event</li><li>+24 more channels</li></ul>' },
+      { h: 'Config', body: '5 parallel batches · 10 posts/channel max · 18h lookback' },
       { h: 'File', files: ['/Users/bk/Work/.cursor/skills/weekly-kb-update/channels.json'] }
     ]
   },
@@ -951,7 +747,7 @@ const data = {
     title: 'Google Calendar',
     status: '🟢 Active — gcal MCP',
     sections: [
-      { h: 'Config', body: 'Account: 1302095@gmail.com\nLookahead: today + 1 day\nFeeds: Day Plan packet in Start the Day' },
+      { h: 'Config', body: 'Account: 1302095@gmail.com\nLookahead: today + 1 day\nFeeds Day Plan packet in Start the Day' },
       { h: 'MCP', body: 'user-calendar_personal' }
     ]
   },
@@ -961,7 +757,7 @@ const data = {
     sections: [
       { h: 'Sources', body: '<ul><li>Vebinars-cases (GDrive Shared)</li><li>Bubble Transcribes (webinars only)</li><li>YouTube (Apple Note + subscriptions)</li><li>Telegram ×33 channels (5 batches, Haiku)</li></ul>' },
       { h: 'Output', body: 'Writes to 2 KBs simultaneously:\n• Automation KB (GDrive Shared)\n• Growth KB (Personal GDrive)' },
-      { h: 'Trigger', body: '"обнови KB", "KB update", "update knowledge base"' },
+      { h: 'Trigger', body: '"update KB", "KB update", "update knowledge base"' },
       { h: 'Files', files: ['/Users/bk/Work/.cursor/skills/weekly-kb-update/SKILL.md'] }
     ]
   },
@@ -993,16 +789,16 @@ const data = {
   },
   'marketing-dept': {
     title: 'Marketing Department',
-    status: '🔵 New — created 2026-03-29',
+    status: '🟢 Active',
     sections: [
       { h: 'Three levels', body: '<ul><li><b>Boris Brand</b> — AI, automation, building in public</li><li><b>Project Marketing</b> — AAS lead gen + NGED positioning</li><li><b>Client Marketing</b> — reusable playbooks for AAS clients</li></ul>' },
-      { h: 'Trigger', body: '"content queue", "что постить", "рилы на неделю", "marketing plan"' },
+      { h: 'Trigger', body: '"content queue", "what to post", "reels for the week", "marketing plan"' },
       { h: 'Key files', files: ['/Users/bk/Work/PROJECTS/Marketing/MARKETING_OS.md', '/Users/bk/Work/PROJECTS/Marketing/content-queue.md', '/Users/bk/Work/.cursor/skills/marketing-dept/SKILL.md'] }
     ]
   },
   'content-queue': {
     title: 'Content Queue',
-    status: '🔵 New — created 2026-03-29',
+    status: '🟢 Active',
     sections: [
       { h: 'Structure', body: '<ul><li>📦 Backlog — all ideas, no date</li><li>🗓 This Week — 3 items, set Monday</li><li>🔥 In Production — running in pipeline</li><li>✅ Published — with metrics</li></ul>' },
       { h: 'Weekly rhythm', body: 'Every Monday: pull 3 from Backlog → This Week\nMon–Thu: produce 1 reel/day\nFri: review metrics → update Backlog' },
@@ -1015,7 +811,7 @@ const data = {
     sections: [
       { h: 'Reel types', body: '<ul><li>A — Screen demo (Playwright DM)</li><li>B — Talking head (D-ID) ❌ credits exhausted</li><li>C1 — Photo + voiceover (PIL + ElevenLabs)</li><li>C2 — Chat bubbles (PIL)</li><li>D — Kinetic typography ✅</li><li>E — Anime via Kling AI</li></ul>' },
       { h: 'API status', body: 'ElevenLabs: ✅ Starter unlimited\nD-ID: ❌ 12 credits used — needs $5.90 top-up\nKling: Browser mode (needs Chrome CDP port 9222)' },
-      { h: 'Commands', cmds: ['cd /Users/bk/Work/PROJECTS/AI-Automation/ReelsFactory', 'python orchestrator.py --type d', 'python modules/pipeline.py --type d'] },
+      { h: 'Commands', cmds: ['cd /Users/bk/Work/PROJECTS/AI-Automation/ReelsFactory', 'python orchestrator.py --type d'] },
       { h: 'Analytics', cmds: ['python scripts/track_analytics.py --weekly'] }
     ]
   },
@@ -1033,27 +829,29 @@ const data = {
   },
   'aas': {
     title: 'AI Automation Studio',
-    status: '🟢 Active',
+    status: '🟢 Active — Fractional CAIO positioning Apr 2026',
     sections: [
       { h: 'Goal', body: 'AI chatbots and automation for UK/EU SMB clients. Retainers + project fees. Primary revenue engine.' },
+      { h: 'Positioning', body: '<b>Fractional Chief AI Officer (CAIO)</b> — external AI director for SMBs. Owns roadmap, leads pilots, delivers automations.' },
+      { h: 'Fee band', body: '£3,000 – £15,000 per project (confirmed). Scoped via 20-min discovery call.' },
       { h: 'Email', body: 'boris.korol@ai-automation.studio (gmail MCP)' },
-      { h: 'Logo rule', files: ['/Users/bk/Work/.cursor/rules/ai-automation-logo.mdc'] }
+      { h: 'Key files', files: ['/Users/bk/Work/PROJECTS/AI-Automation/marketing-context.md', '/Users/bk/Work/PROJECTS/AI-Automation/Design.md'] }
     ]
   },
   'healthcopilot': {
     title: 'HealthCopilot',
-    status: '🟡 Paused — waiting Евгений (Dubai)',
+    status: '🟡 Paused — waiting on Evgeny (Dubai)',
     sections: [
-      { h: 'Status', body: 'MVP done. Bot scaffolded. Pitch deck v3 done. Q&A sent to Евгений.' },
-      { h: 'Resume trigger', body: 'Евгений responds with interest OR Boris explicitly reactivates.' },
+      { h: 'Status', body: 'MVP done. Bot scaffolded. Pitch deck v3 done. Q&A sent to Evgeny.' },
+      { h: 'Resume trigger', body: 'Evgeny responds with interest OR Boris explicitly reactivates.' },
       { h: 'Path', files: ['/Users/bk/Work/PROJECTS/HealthCopilot/'] }
     ]
   },
   'culturecurious': {
     title: 'CultureCurious',
-    status: '🟡 Paused — waiting Алина Дейви (Sotheby\'s)',
+    status: '🟡 Paused — waiting on Alina Dayvi (Sotheby\'s)',
     sections: [
-      { h: 'Status', body: 'One-pager sent to Алина Дейви. Waiting for response.' },
+      { h: 'Status', body: 'One-pager sent to Alina Dayvi. Waiting for response.' },
       { h: 'Resume trigger', body: 'Alina responds OR Boris explicitly reactivates.' },
       { h: 'Path', files: ['/Users/bk/Work/PROJECTS/CultureCurious/'] }
     ]
@@ -1076,50 +874,21 @@ const data = {
     ]
   },
   'mcp': {
-    title: 'MCP Servers ×14',
-    status: '🟢 Active',
+    title: 'MCP Servers',
+    status: '🟢 Active + 3 Custom in Build',
     sections: [
-      { h: 'Active servers', body: '<ul><li>ms365 — NGED email</li><li>gmail — AAS email</li><li>gmail_personal — Personal</li><li>telegram-mcp — TG read/write</li><li>notion — Notion DB</li><li>figma — Design files</li><li>firecrawl — Web scraping</li><li>apify — Web actors</li><li>perplexity — AI search</li><li>playwright — Browser automation</li><li>calendar_personal — Google Cal</li><li>cursor-ide-browser — In-Cursor browser</li><li>Clay — Contact enrichment</li><li>Gmail (claude.ai) — Additional gmail</li></ul>' }
+      { h: 'Active servers', body: '<ul><li>ms365 — NGED email</li><li>gmail — AAS email</li><li>gmail_personal — Personal</li><li>telegram-mcp — TG read/write</li><li>notion — Notion DB</li><li>figma — Design files</li><li>firecrawl — Web scraping</li><li>apify — Web actors</li><li>playwright — Browser automation</li><li>calendar_personal — Google Cal</li><li>Clay — Contact enrichment</li></ul>' },
+      { h: 'Custom MCPs in build', body: '<ul><li>gdrive-mcp — direct GDrive access</li><li>python-standalone — run Python as tools</li><li>telegram-mcp — custom TG integration</li></ul>' },
+      { h: 'Path', files: ['/Users/bk/Work/PROJECTS/MCPs/'] }
     ]
   },
   'model-routing': {
     title: 'Model Routing',
     status: '🟢 Active',
     sections: [
-      { h: 'Rules', body: '<ul><li><b>Haiku</b> — extraction, classification, scoring, high-volume loops</li><li><b>Sonnet</b> — DEFAULT for everything else</li><li><b>Opus</b> — explicit only, strategic deep-work, board papers</li></ul>' },
+      { h: 'Rules', body: '<ul><li><b>Haiku</b> — extraction, classification, scoring, high-volume loops</li><li><b>Sonnet</b> — DEFAULT for single-agent tasks</li><li><b>Opus</b> — CEO validator, My Team consilium, explicit strategic work</li></ul>' },
       { h: 'Cost signal', body: 'Opus = 8× Haiku = 1.7× Sonnet\nJustify Opus before using.' },
       { h: 'File', files: ['/Users/bk/Work/OPERATING/MODEL_ROUTING.md', '/Users/bk/Work/.cursor/rules/model-routing.mdc'] }
-    ]
-  },
-  'advisory-board': {
-    title: 'Advisory Board',
-    status: '🔵 New skill — to be created',
-    sections: [
-      { h: 'Concept', body: 'Adapted from serejaris/ris-claude-code ceo-council. Launches 4 parallel expert sub-agents, each analyses the same decision independently, then synthesises.' },
-      { h: 'Roles', body: '<ul><li><b>Strategic Architect</b> — systems, structure, long-term</li><li><b>Commercial Director</b> — revenue, pricing, client pipeline</li><li><b>Domain Analyst-Researcher</b> — dynamic: becomes deep expert in project domain (EdTech for NGED, MarTech for AAS, etc.)</li><li><b>Product Critic</b> — challenges assumptions, finds flaws</li></ul>' },
-      { h: 'Integration', body: 'Uses Boris OS Decision Filter (3–4 YES → proceed)' },
-      { h: 'Trigger', body: '"advisory board", "совет директоров", "разбор решения"' },
-      { h: 'Model', body: 'Opus (deep reasoning required)' }
-    ]
-  },
-  'weekly-rhythm': {
-    title: 'Weekly Rhythm',
-    status: '🔵 New skill — to be created',
-    sections: [
-      { h: 'Concept', body: 'Adapted from serejaris weekly-retro + weekly-planning. No GitHub dependency.' },
-      { h: 'Sources', body: '<ul><li>Project _STATE.md files</li><li>Start the Day output cache</li><li>OPERATING/REFLECTIONS/</li><li>MEMORY.md</li></ul>' },
-      { h: 'Output', body: 'Weekly outcomes (not task lists) per project. Filtered by MONEY > LEVERAGE > NETWORK.' },
-      { h: 'Trigger', body: '"недельный ритм", "weekly review", "plan the week"' }
-    ]
-  },
-  'cc-analytics': {
-    title: 'Usage Analytics',
-    status: '🔵 New skill — to be created',
-    sections: [
-      { h: 'Concept', body: 'Adapted from serejaris cc-analytics. Parses ~/.claude/history.jsonl, generates HTML report.' },
-      { h: 'Additions vs original', body: '<ul><li>Project-specific breakdown (NGED / AAS / ReelsFactory)</li><li>Cost estimate ($) per project</li><li>Haiku vs Sonnet vs Opus split</li></ul>' },
-      { h: 'Source', body: '~/.claude/history.jsonl' },
-      { h: 'Trigger', body: '"cc analytics", "статистика", "сколько я трачу"' }
     ]
   },
 
@@ -1128,91 +897,121 @@ const data = {
     title: 'CEO — Team Validator',
     status: '🟡 Designing — Phase 1 build pending',
     sections: [
-      { h: 'Role', body: '<b>Метавалидатор.</b> Не отвечает Борису напрямую — только проверяет ответы 6 агентов перед синтезом.' },
-      { h: 'Знания', body: '<ul><li>Байесовское мышление — prior vs evidence</li><li>Теория игр — Nash equilibrium, стратегические ловушки</li><li>Когнитивные искажения ×30+ (confirmation bias, anchoring, availability heuristic и др.)</li><li>Тактики манипуляции и social proof</li><li>Статистическая значимость — достаточность выборки</li></ul>' },
-      { h: 'Скоринг каждого агента (0–100)', body: '<ul><li>data_sufficiency — достаточно данных для вывода? (0–25)</li><li>source_quality — первичные? датированы? (0–25)</li><li>logic_validity — нет fallacies и bias? (0–25)</li><li>hallucination_risk — факты без источника? (0–25)</li></ul>' },
-      { h: 'Правила', body: '&lt;80% → revision request с указанием конкретного пробела<br>Противоречия между агентами → 🚩 RED FLAG в синтезе<br>Max 2 revision loops → потом accepted with warning' },
-      { h: 'Модель', body: 'Opus (обязательно)' }
+      { h: 'Role', body: '<b>Meta-validator.</b> Does not respond to Boris directly — only validates 6 agent responses before synthesis.' },
+      { h: 'Knowledge base', body: '<ul><li>Bayesian thinking — prior vs evidence</li><li>Game theory — Nash equilibrium, strategic traps</li><li>Cognitive biases ×30+ (confirmation bias, anchoring, availability heuristic, etc.)</li><li>Manipulation tactics and social proof patterns</li><li>Statistical significance — sample sufficiency</li></ul>' },
+      { h: 'Scoring each agent (0–100)', body: '<ul><li>data_sufficiency — enough data to support conclusion? (0–25)</li><li>source_quality — primary sources? dated? verified? (0–25)</li><li>logic_validity — no fallacies or cognitive bias? (0–25)</li><li>hallucination_risk — specific facts without source? (0–25)</li></ul>' },
+      { h: 'Rules', body: '&lt;80% → revision request with specific gap identified<br>Agent contradictions → 🚩 RED FLAG in synthesis<br>Max 2 revision loops → then accepted with warning' },
+      { h: 'Model', body: 'Opus (mandatory)' }
     ]
   },
   'agent-cmo': {
     title: 'CMO — Chief Marketing Officer',
     status: '🟡 Designing — Phase 1 build pending',
     sections: [
-      { h: 'Роль', body: 'Директор по маркетингу. Думает конверсиями, хуками, аудиторией. Приоритет: AAS leads + Boris Brand + NGED positioning.' },
-      { h: 'Инструменты', body: '<ul><li>read_file / write_file — content-queue.md, marketing-context.md</li><li>run_script — orchestrator.py (ReelsFactory)</li><li>Wix-outreach pipeline</li></ul>' },
-      { h: 'KB путь', files: ['/Users/bk/Work/PROJECTS/Marketing/', '/Users/bk/Work/PROJECTS/AI-Automation/ReelsFactory/'] },
-      { h: 'Telegram', body: '/cmo → активирует агента. Принимает текст, ссылки, фото для контента.' },
-      { h: 'Кнопки действий', body: '[✅ Добавить в очередь] [🎬 Запустить ReelsFactory] [📤 Сохранить в KB]' }
+      { h: 'Role', body: 'Chief Marketing Officer. Thinks in conversions, hooks, audience. Priority: AAS leads + Boris Brand + NGED positioning.' },
+      { h: 'Tools', body: '<ul><li>read_file / write_file — content-queue.md, marketing-context.md</li><li>run_script — orchestrator.py (ReelsFactory)</li><li>Wix-outreach pipeline</li></ul>' },
+      { h: 'KB path', files: ['/Users/bk/Work/PROJECTS/Marketing/', '/Users/bk/Work/PROJECTS/AI-Automation/ReelsFactory/'] },
+      { h: 'Telegram', body: '/cmo → activates agent. Accepts text, links, photos for content.' },
+      { h: 'Action buttons', body: '[✅ Add to queue] [🎬 Launch ReelsFactory] [📤 Save to KB]' }
     ]
   },
   'agent-cto': {
     title: 'CTO — Chief Technology Officer',
     status: '🟡 Designing — Phase 1 build pending',
     sections: [
-      { h: 'Роль', body: 'Технический директор. Думает системами, автоматизацией, ROI инструментов. Никогда не строит сложное там, где работает простое.' },
-      { h: 'Инструменты', body: '<ul><li>read_file / write_file / list_dir</li><li>run_script — Python, bash</li><li>Скиллы: .cursor/skills/, ~/.claude/skills/</li></ul>' },
-      { h: 'KB путь', files: ['/Users/bk/Work/OPERATING/', '/Users/bk/Work/.cursor/skills/', '/Users/bk/Work/PROJECTS/MCPs/'] },
-      { h: 'Telegram', body: '/cto → активирует агента. Принимает код, ошибки, идеи по автоматизации.' },
-      { h: 'Кнопки действий', body: '[✅ Создать скилл] [⚙️ Обновить OPERATING/] [🔧 Запустить скрипт]' }
+      { h: 'Role', body: 'Chief Technology Officer. Thinks in systems, automation, tool ROI. Never builds complex when simple works.' },
+      { h: 'Tools', body: '<ul><li>read_file / write_file / list_dir</li><li>run_script — Python, bash</li><li>Skills: .cursor/skills/, ~/.claude/skills/</li></ul>' },
+      { h: 'KB path', files: ['/Users/bk/Work/OPERATING/', '/Users/bk/Work/.cursor/skills/', '/Users/bk/Work/PROJECTS/MCPs/'] },
+      { h: 'Telegram', body: '/cto → activates agent. Accepts code, errors, automation ideas.' },
+      { h: 'Action buttons', body: '[✅ Create skill] [⚙️ Update OPERATING/] [🔧 Run script]' }
     ]
   },
   'agent-bd': {
     title: 'BD — Business Development',
     status: '🟡 Designing — Phase 1 build pending',
     sections: [
-      { h: 'Роль', body: 'Директор по развитию бизнеса. Думает пайплайном, отношениями, тимингом. Знает AAS и NGED контексты детально.' },
-      { h: 'Инструменты', body: '<ul><li>read_file / write_file</li><li>Clay MCP — обогащение контактов</li><li>Explee — B2B data</li></ul>' },
-      { h: 'KB путь', files: ['/Users/bk/Work/PROJECTS/NETWORK/', '/Users/bk/Work/PROJECTS/NGED.A/', '/Users/bk/Work/PROJECTS/AI-Automation/STRATEGY/'] },
-      { h: 'Telegram', body: '/bd → активирует агента. Принимает имена, компании, PDF презентаций, запросы на outreach.' },
-      { h: 'Кнопки действий', body: '[✅ Добавить контакт] [📧 Создать outreach] [📋 Обновить pipeline]' }
+      { h: 'Role', body: 'Business Development Director. Thinks in pipeline, relationships, timing. Knows AAS and NGED contexts in detail.' },
+      { h: 'Tools', body: '<ul><li>read_file / write_file</li><li>Clay MCP — contact enrichment</li><li>Explee — B2B data</li></ul>' },
+      { h: 'KB path', files: ['/Users/bk/Work/PROJECTS/NETWORK/', '/Users/bk/Work/PROJECTS/NGED.A/', '/Users/bk/Work/PROJECTS/AI-Automation/STRATEGY/'] },
+      { h: 'Telegram', body: '/bd → activates agent. Accepts names, companies, PDF decks, outreach requests.' },
+      { h: 'Action buttons', body: '[✅ Add contact] [📧 Create outreach] [📋 Update pipeline]' }
     ]
   },
   'agent-coach': {
     title: 'Coach — Personal Development',
     status: '🟡 Designing — Phase 1 build pending',
     sections: [
-      { h: 'Роль', body: 'Персональный коуч. Всегда работает у <b>верхней границы ЗБР</b> — не ниже (скучно), не выше (перегруз).' },
-      { h: '4 оси ЗБР', body: '<ul><li>🖥 Vibe-coder / AI инструменты</li><li>🏢 Предприниматель / CEO skills</li><li>💹 Инвестор</li><li>🎨 Искусство / культура</li></ul>' },
-      { h: 'Что принимает', body: '<ul><li>Название книги → категория → рекомендации</li><li>YouTube канал → анализ → что ещё смотреть</li><li>Фото произведения искусства → художник / эпоха → похожие</li><li>Опера / балет / филармония → контекст → что слушать дальше</li></ul>' },
-      { h: 'KB путь', files: ['/Users/bk/Work/AGENTS/Coach/KB/vibe-coder/', '/Users/bk/Work/AGENTS/Coach/KB/entrepreneur/', '/Users/bk/Work/AGENTS/Coach/KB/investor/', '/Users/bk/Work/AGENTS/Coach/KB/culture/'] },
-      { h: 'Кнопки действий', body: '[✅ Сохранить в KB] [📚 Рекомендации] [🗺 Показать ЗБР-карту]' }
+      { h: 'Role', body: 'Personal coach. Always works at the <b>upper boundary of ZPD</b> — not below (boring), not above (overwhelm).' },
+      { h: '4 ZPD axes', body: '<ul><li>🖥 Vibe-coder / AI tools</li><li>🏢 Entrepreneur / CEO skills</li><li>💹 Investor</li><li>🎨 Art / Culture</li></ul>' },
+      { h: 'What it accepts', body: '<ul><li>Book title → category → recommendations</li><li>YouTube channel → analysis → what else to watch</li><li>Photo of artwork → artist / era / movement → similar works</li><li>Opera / ballet / philharmonic → context → what to listen next</li></ul>' },
+      { h: 'KB path', files: ['/Users/bk/Work/AGENTS/Coach/KB/vibe-coder/', '/Users/bk/Work/AGENTS/Coach/KB/entrepreneur/', '/Users/bk/Work/AGENTS/Coach/KB/investor/', '/Users/bk/Work/AGENTS/Coach/KB/culture/'] },
+      { h: 'Action buttons', body: '[✅ Save to KB] [📚 Recommendations] [🗺 Show ZPD map]' }
     ]
   },
   'agent-cfo': {
     title: 'CFO — Chief Financial Officer',
     status: '🟡 Designing — Phase 1 build pending',
     sections: [
-      { h: 'Роль', body: 'Финансовый директор. Думает рисками, аллокацией, временным горизонтом. Знает долгосрочные цели Бориса.' },
-      { h: 'Портфель', body: '<ul><li>📈 Акции (публичные)</li><li>₿ Крипто</li><li>🏦 Облигации / недвижимость</li><li>🚀 Венчурные инвестиции</li></ul>' },
-      { h: 'Что принимает', body: '<ul><li>Скриншот портфеля → Vision → обновляет PORTFOLIO/</li><li>PDF стартапа → due diligence анализ</li><li>Новость → влияние на позиции</li></ul>' },
-      { h: 'KB путь', files: ['/Users/bk/Work/PROJECTS/FINANCES/PORTFOLIO/', '/Users/bk/Work/PROJECTS/FINANCES/RESEARCH/'] },
-      { h: 'Кнопки действий', body: '[✅ Обновить портфель] [⚠️ Флаг риска] [📊 Показать аллокацию]' }
+      { h: 'Role', body: 'Chief Financial Officer. Thinks in risks, allocation, time horizon. Knows Boris\'s long-term financial goals.' },
+      { h: 'Portfolio', body: '<ul><li>📈 Stocks (public equities)</li><li>₿ Crypto</li><li>🏦 Bonds / real estate</li><li>🚀 Venture investments</li></ul>' },
+      { h: 'What it accepts', body: '<ul><li>Portfolio screenshot → Vision → updates PORTFOLIO/</li><li>Startup PDF → due diligence analysis</li><li>News → impact on positions</li></ul>' },
+      { h: 'KB path', files: ['/Users/bk/Work/PROJECTS/FINANCES/PORTFOLIO/', '/Users/bk/Work/PROJECTS/FINANCES/RESEARCH/'] },
+      { h: 'Action buttons', body: '[✅ Update portfolio] [⚠️ Flag risk] [📊 Show allocation]' }
     ]
   },
   'agent-analyst': {
     title: 'Analyst — Research & Intelligence',
     status: '🟡 Designing — Phase 1 build pending',
     sections: [
-      { h: 'Роль', body: 'Исследователь и разведчик. Собирает входящую информацию и анализирует как она влияет на проекты, контакты, инвестиции, развитие.' },
-      { h: 'Стандарты ресёрча', body: '<ul><li>Первичные источники > вторичных</li><li>Дата обязательна на каждом факте</li><li>Минимум 2 независимых подтверждения</li><li>Формат: Факт | Источник | Дата | Релевантность</li></ul>' },
-      { h: 'Инструменты', body: '<ul><li><b>EXA</b> — семантический поиск идей/компаний/людей</li><li><b>Explee</b> — B2B обогащение контактов</li><li><b>Parallel AI</b> — глубокий ресёрч (>50K токенов)</li><li><b>Firecrawl</b> — скрейпинг сайтов</li></ul>' },
-      { h: 'Проактивный режим', body: 'В start-day флагует: новости → NGED грант-цикл, контакты → timing, крипто-сигналы → CFO, AI фреймворки → CTO + Coach.' },
-      { h: 'Кнопки действий', body: '[✅ Сохранить ресёрч] [📤 Переслать агенту] [🔍 Углубить]' }
+      { h: 'Role', body: 'Researcher and intelligence officer. Collects incoming information and analyses how it affects projects, contacts, investments, development.' },
+      { h: 'Research standards', body: '<ul><li>Primary sources > secondary</li><li>Date required on every fact</li><li>Minimum 2 independent confirmations</li><li>Format: Fact | Source | Date | Relevance to Boris OS</li></ul>' },
+      { h: 'Tools', body: '<ul><li><b>EXA</b> — semantic search for ideas/companies/people</li><li><b>Explee</b> — B2B contact enrichment</li><li><b>Parallel AI</b> — deep research (>50K tokens)</li><li><b>Firecrawl</b> — website scraping</li></ul>' },
+      { h: 'Proactive mode', body: 'In start-day: flags news → NGED grant cycle, contacts → timing, crypto signals → CFO, AI frameworks → CTO + Coach.' },
+      { h: 'Action buttons', body: '[✅ Save research] [📤 Forward to agent] [🔍 Dig deeper]' }
     ]
   },
   'myteam-telegram': {
     title: 'Telegram Bot Interface',
     status: '🟡 Designing — Phase 1 build pending',
     sections: [
-      { h: 'Бот', body: '@ReelsFacBot (токен уже в .env)' },
-      { h: 'Стек', body: 'python-telegram-bot v21 (async) + anthropic SDK + SQLite (сессии)' },
-      { h: 'Режимы', body: '<ul><li><b>Single agent</b> — /menu → выбрать → чат с агентом</li><li><b>My Team</b> — /team + вопрос → 6 агентов параллельно → CEO валидирует → синтез</li></ul>' },
-      { h: 'Intake types', body: '<ul><li>Текст → агент обрабатывает</li><li>Фото / скриншот → Vision (Opus) → classify → KB</li><li>PDF / документ → парсинг → структурирование</li></ul>' },
-      { h: 'My Team output', body: 'Консенсус / Рекомендация / Decision Filter / 🚩 Флаги / Кнопки действий' },
-      { h: 'Модели', body: 'CEO + My Team: Opus · Одиночные агенты: Sonnet' },
-      { h: 'Хостинг', body: 'Локально на Mac (пока). Upgrade → Railway/Replit для 24/7.' },
-      { h: 'Файлы (будут созданы)', files: ['/Users/bk/Work/AGENTS/', '/Users/bk/Work/AGENTS/bot.py', '/Users/bk/Work/AGENTS/dispatcher.py'] }
+      { h: 'Bot', body: '@ReelsFacBot (token already in .env)' },
+      { h: 'Stack', body: 'python-telegram-bot v21 (async) + anthropic SDK + SQLite (sessions)' },
+      { h: 'Modes', body: '<ul><li><b>Single agent</b> — /menu → select → chat with agent</li><li><b>My Team</b> — /team + question → 6 agents in parallel → CEO validates → synthesis</li></ul>' },
+      { h: 'Intake types', body: '<ul><li>Text → agent processes</li><li>Photo / screenshot → Vision (Opus) → classify → KB</li><li>PDF / document → parse → structure</li></ul>' },
+      { h: 'My Team output', body: 'Consensus / Recommendation / Decision Filter / 🚩 Flags / Action buttons' },
+      { h: 'Models', body: 'CEO + My Team: Opus · Single agents: Sonnet' },
+      { h: 'Hosting', body: 'Local Mac (test phase). Upgrade → Railway/Replit for 24/7.' },
+      { h: 'Files (to be created)', files: ['/Users/bk/Work/AGENTS/', '/Users/bk/Work/AGENTS/bot.py', '/Users/bk/Work/AGENTS/dispatcher.py'] }
+    ]
+  },
+  'advisory-board': {
+    title: 'Advisory Board',
+    status: '🟢 Active — ~/.claude/skills/advisory-board/',
+    sections: [
+      { h: 'Concept', body: 'Launches 4 parallel expert sub-agents for independent decision analysis. Precursor to My Team full build.' },
+      { h: 'Roles', body: '<ul><li><b>Strategic Architect</b> — systems, structure, long-term</li><li><b>Commercial Director</b> — revenue, pricing, client pipeline</li><li><b>Domain Analyst-Researcher</b> — deep domain expert per project</li><li><b>Product Critic</b> — challenges assumptions, finds flaws</li></ul>' },
+      { h: 'Trigger', body: '"advisory board", "strategic review", "council"' },
+      { h: 'Model', body: 'Opus' }
+    ]
+  },
+  'weekly-rhythm': {
+    title: 'Weekly Rhythm',
+    status: '🟢 Active — ~/.claude/skills/weekly-rhythm/',
+    sections: [
+      { h: 'Concept', body: 'Structured weekly retro + planning. No GitHub dependency.' },
+      { h: 'Sources', body: '<ul><li>Project _STATE.md files</li><li>Start the Day output cache</li><li>OPERATING/REFLECTIONS/</li><li>MEMORY.md</li></ul>' },
+      { h: 'Output', body: 'Weekly outcomes (not task lists) per project. Filtered by MONEY > LEVERAGE > NETWORK.' },
+      { h: 'Trigger', body: '"weekly review", "plan the week", "weekly rhythm"' }
+    ]
+  },
+  'cc-analytics': {
+    title: 'Usage Analytics',
+    status: '🟢 Active — ~/.claude/skills/cc-analytics/',
+    sections: [
+      { h: 'Concept', body: 'Parses ~/.claude/history.jsonl, generates HTML usage report.' },
+      { h: 'Breakdown', body: '<ul><li>Project-specific (NGED / AAS / ReelsFactory)</li><li>Cost estimate ($) per project</li><li>Haiku vs Sonnet vs Opus split</li></ul>' },
+      { h: 'Source', body: '~/.claude/history.jsonl' },
+      { h: 'Trigger', body: '"cc analytics", "usage report", "how much am I spending"' }
     ]
   }
 };
