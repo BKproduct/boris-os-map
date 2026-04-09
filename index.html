@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boris OS — System Map</title>
+<title>Boris OS — System Map v3 (2026-04-09)</title>
 <style>
   :root {
     --bg: #0d1117;
@@ -404,6 +404,20 @@
   .stat-yellow .stat-value { color: var(--yellow); }
   .stat-blue .stat-value { color: var(--blue); }
 
+  /* CEO special badge */
+  .status-ceo {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #d29922;
+    box-shadow: 0 0 8px #d29922;
+    display: inline-block;
+  }
+  .card-ceo {
+    border-color: #d29922 !important;
+    background: linear-gradient(135deg, #1a1600 0%, #21262d 100%);
+  }
+  .tag-ceo { background: rgba(210,153,34,0.15); color: #d29922; border-color: rgba(210,153,34,0.3); }
+  .layer-myteam .layer-title { color: var(--yellow); }
+
   /* MOBILE */
   @media (max-width: 768px) {
     .main { padding: 16px; }
@@ -420,7 +434,7 @@
 <div class="header">
   <div class="header-left">
     <h1>⬡ Boris OS — System Map</h1>
-    <p>North Star 2026: £300K/year — Strategic Architect</p>
+    <p>North Star 2026: £1M/year — Strategic Architect · v3 · 2026-04-09</p>
   </div>
   <div class="header-right">
     <span class="legend-dot"><span class="dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></span> Active</span>
@@ -438,18 +452,18 @@
     <span class="filter-tag filter-leverage">⚙️ LEVERAGE</span>
     <span class="filter-tag filter-network">🤝 NETWORK</span>
   </div>
-  <span style="color:var(--text-dim);font-size:11px;margin-left:8px">Order: MONEY › LEVERAGE › NETWORK › everything else</span>
+  <span style="color:var(--text-dim);font-size:11px;margin-left:8px">Order: MONEY › LEVERAGE › NETWORK › everything else · Target: £1M/year</span>
 </div>
 
 <!-- STATS -->
 <div class="stats-row">
-  <div class="stat stat-green"><span class="stat-value">4</span><span class="stat-label">Active Skills</span></div>
+  <div class="stat stat-blue"><span class="stat-value">7</span><span class="stat-label">My Team Agents</span></div>
+  <div class="stat stat-green"><span class="stat-value">7</span><span class="stat-label">Active Skills</span></div>
   <div class="stat stat-yellow"><span class="stat-value">2</span><span class="stat-label">Paused Projects</span></div>
-  <div class="stat stat-blue"><span class="stat-value">3</span><span class="stat-label">New Skills</span></div>
   <div class="stat"><span class="stat-value">33</span><span class="stat-label">TG Channels</span></div>
   <div class="stat"><span class="stat-value">3</span><span class="stat-label">Email Accounts</span></div>
-  <div class="stat"><span class="stat-value">14</span><span class="stat-label">MCP Servers</span></div>
-  <div class="stat"><span class="stat-value">Sonnet</span><span class="stat-label">Default Model</span></div>
+  <div class="stat"><span class="stat-value">3</span><span class="stat-label">Custom MCPs</span></div>
+  <div class="stat"><span class="stat-value">Opus</span><span class="stat-label">Team Model</span></div>
 </div>
 
 <div class="main">
@@ -712,6 +726,122 @@
           <span class="tag">MODEL_ROUTING.md</span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- LAYER: MY TEAM — AGENT COUNCIL -->
+  <div class="layer layer-myteam">
+    <div class="layer-header">
+      <span class="layer-title">⚡ My Team — Agent Council</span>
+      <div class="layer-line"></div>
+    </div>
+    <div class="cards">
+
+      <!-- CEO — top validator, gold card -->
+      <div class="card card-ceo" onclick="openPanel('agent-ceo')">
+        <div class="card-header">
+          <span class="card-title">CEO — Validator</span>
+          <span class="status-ceo"></span>
+        </div>
+        <div class="card-desc">Метавалидатор над командой. Теория игр, байесовское мышление, когнитивные искажения ×30+. Проверяет каждый ответ: данные, источники, логика, галлюцинации. &lt;80% → на доработку. Противоречия → 🚩</div>
+        <div class="card-tags">
+          <span class="tag tag-ceo">Quality Gate</span>
+          <span class="tag tag-ceo">Max 2 revision loops</span>
+          <span class="tag tag-model">Opus</span>
+        </div>
+      </div>
+
+      <div class="card" onclick="openPanel('agent-cmo')">
+        <div class="card-header">
+          <span class="card-title">CMO — Marketing</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Контент, аутрич, личный бренд, AAS leads. Управляет content-queue, ReelsFactory, Wix-outreach pipeline.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">/cmo</span>
+          <span class="tag tag-money">💰 MONEY</span>
+          <span class="tag tag-model">Sonnet</span>
+        </div>
+      </div>
+
+      <div class="card" onclick="openPanel('agent-cto')">
+        <div class="card-header">
+          <span class="card-title">CTO — Infrastructure</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Скрипты, MCP, vibe-coding, автоматизации. Никогда не строит сложное там, где работает простое.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">/cto</span>
+          <span class="tag tag-leverage">⚙️ LEVERAGE</span>
+          <span class="tag tag-model">Sonnet</span>
+        </div>
+      </div>
+
+      <div class="card" onclick="openPanel('agent-bd')">
+        <div class="card-header">
+          <span class="card-title">BD — Sales &amp; Network</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">AAS pipeline, NGED гранты и партнёрства, нетворк. Знает тайминг и отношения. Clay + NETWORK/</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">/bd</span>
+          <span class="tag tag-money">💰 MONEY</span>
+          <span class="tag tag-network">🤝 NETWORK</span>
+        </div>
+      </div>
+
+      <div class="card" onclick="openPanel('agent-coach')">
+        <div class="card-header">
+          <span class="card-title">Coach — Development</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Личное развитие по 4 осям ЗБР: vibe-coder, CEO, investor, culture. Принимает книги, YouTube, арт, оперу, фото. Рекомендует у верхней границы ЗБР.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">/coach</span>
+          <span class="tag">4 ЗБР оси</span>
+          <span class="tag tag-leverage">⚙️ LEVERAGE</span>
+        </div>
+      </div>
+
+      <div class="card" onclick="openPanel('agent-cfo')">
+        <div class="card-header">
+          <span class="card-title">CFO — Finances</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Портфель: акции, крипто, облигации, венчур. Принимает скриншоты (vision). Отслеживает новости, влияющие на позиции. Рекомендации по аллокации.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">/cfo</span>
+          <span class="tag tag-money">💰 MONEY</span>
+          <span class="tag">Vision</span>
+        </div>
+      </div>
+
+      <div class="card" onclick="openPanel('agent-analyst')">
+        <div class="card-header">
+          <span class="card-title">Analyst — Research</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Ресёрч с первичными источниками. EXA, Explee, Parallel AI, Firecrawl. Кросс-доменный анализ: как любая новость влияет на проекты, контакты, инвестиции, развитие.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">/analyst</span>
+          <span class="tag">EXA · Explee · Parallel</span>
+          <span class="tag tag-leverage">⚙️ LEVERAGE</span>
+        </div>
+      </div>
+
+      <div class="card" onclick="openPanel('myteam-telegram')">
+        <div class="card-header">
+          <span class="card-title">Telegram Interface</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">@ReelsFacBot · python-telegram-bot v21 · Hybrid mode: текст + кнопки действий. Boris одним тапом подтверждает — бот выполняет. Хостинг: Mac (тест).</div>
+        <div class="card-tags">
+          <span class="tag">/menu → выбор агента</span>
+          <span class="tag">/team → consilium</span>
+          <span class="tag">asyncio + Anthropic SDK</span>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -982,6 +1112,99 @@ const data = {
       { h: 'Additions vs original', body: '<ul><li>Project-specific breakdown (NGED / AAS / ReelsFactory)</li><li>Cost estimate ($) per project</li><li>Haiku vs Sonnet vs Opus split</li></ul>' },
       { h: 'Source', body: '~/.claude/history.jsonl' },
       { h: 'Trigger', body: '"cc analytics", "статистика", "сколько я трачу"' }
+    ]
+  },
+
+  /* ── MY TEAM AGENT PANELS ── */
+  'agent-ceo': {
+    title: 'CEO — Team Validator',
+    status: '🟡 Designing — Phase 1 build pending',
+    sections: [
+      { h: 'Role', body: '<b>Метавалидатор.</b> Не отвечает Борису напрямую — только проверяет ответы 6 агентов перед синтезом.' },
+      { h: 'Знания', body: '<ul><li>Байесовское мышление — prior vs evidence</li><li>Теория игр — Nash equilibrium, стратегические ловушки</li><li>Когнитивные искажения ×30+ (confirmation bias, anchoring, availability heuristic и др.)</li><li>Тактики манипуляции и social proof</li><li>Статистическая значимость — достаточность выборки</li></ul>' },
+      { h: 'Скоринг каждого агента (0–100)', body: '<ul><li>data_sufficiency — достаточно данных для вывода? (0–25)</li><li>source_quality — первичные? датированы? (0–25)</li><li>logic_validity — нет fallacies и bias? (0–25)</li><li>hallucination_risk — факты без источника? (0–25)</li></ul>' },
+      { h: 'Правила', body: '&lt;80% → revision request с указанием конкретного пробела<br>Противоречия между агентами → 🚩 RED FLAG в синтезе<br>Max 2 revision loops → потом accepted with warning' },
+      { h: 'Модель', body: 'Opus (обязательно)' }
+    ]
+  },
+  'agent-cmo': {
+    title: 'CMO — Chief Marketing Officer',
+    status: '🟡 Designing — Phase 1 build pending',
+    sections: [
+      { h: 'Роль', body: 'Директор по маркетингу. Думает конверсиями, хуками, аудиторией. Приоритет: AAS leads + Boris Brand + NGED positioning.' },
+      { h: 'Инструменты', body: '<ul><li>read_file / write_file — content-queue.md, marketing-context.md</li><li>run_script — orchestrator.py (ReelsFactory)</li><li>Wix-outreach pipeline</li></ul>' },
+      { h: 'KB путь', files: ['/Users/bk/Work/PROJECTS/Marketing/', '/Users/bk/Work/PROJECTS/AI-Automation/ReelsFactory/'] },
+      { h: 'Telegram', body: '/cmo → активирует агента. Принимает текст, ссылки, фото для контента.' },
+      { h: 'Кнопки действий', body: '[✅ Добавить в очередь] [🎬 Запустить ReelsFactory] [📤 Сохранить в KB]' }
+    ]
+  },
+  'agent-cto': {
+    title: 'CTO — Chief Technology Officer',
+    status: '🟡 Designing — Phase 1 build pending',
+    sections: [
+      { h: 'Роль', body: 'Технический директор. Думает системами, автоматизацией, ROI инструментов. Никогда не строит сложное там, где работает простое.' },
+      { h: 'Инструменты', body: '<ul><li>read_file / write_file / list_dir</li><li>run_script — Python, bash</li><li>Скиллы: .cursor/skills/, ~/.claude/skills/</li></ul>' },
+      { h: 'KB путь', files: ['/Users/bk/Work/OPERATING/', '/Users/bk/Work/.cursor/skills/', '/Users/bk/Work/PROJECTS/MCPs/'] },
+      { h: 'Telegram', body: '/cto → активирует агента. Принимает код, ошибки, идеи по автоматизации.' },
+      { h: 'Кнопки действий', body: '[✅ Создать скилл] [⚙️ Обновить OPERATING/] [🔧 Запустить скрипт]' }
+    ]
+  },
+  'agent-bd': {
+    title: 'BD — Business Development',
+    status: '🟡 Designing — Phase 1 build pending',
+    sections: [
+      { h: 'Роль', body: 'Директор по развитию бизнеса. Думает пайплайном, отношениями, тимингом. Знает AAS и NGED контексты детально.' },
+      { h: 'Инструменты', body: '<ul><li>read_file / write_file</li><li>Clay MCP — обогащение контактов</li><li>Explee — B2B data</li></ul>' },
+      { h: 'KB путь', files: ['/Users/bk/Work/PROJECTS/NETWORK/', '/Users/bk/Work/PROJECTS/NGED.A/', '/Users/bk/Work/PROJECTS/AI-Automation/STRATEGY/'] },
+      { h: 'Telegram', body: '/bd → активирует агента. Принимает имена, компании, PDF презентаций, запросы на outreach.' },
+      { h: 'Кнопки действий', body: '[✅ Добавить контакт] [📧 Создать outreach] [📋 Обновить pipeline]' }
+    ]
+  },
+  'agent-coach': {
+    title: 'Coach — Personal Development',
+    status: '🟡 Designing — Phase 1 build pending',
+    sections: [
+      { h: 'Роль', body: 'Персональный коуч. Всегда работает у <b>верхней границы ЗБР</b> — не ниже (скучно), не выше (перегруз).' },
+      { h: '4 оси ЗБР', body: '<ul><li>🖥 Vibe-coder / AI инструменты</li><li>🏢 Предприниматель / CEO skills</li><li>💹 Инвестор</li><li>🎨 Искусство / культура</li></ul>' },
+      { h: 'Что принимает', body: '<ul><li>Название книги → категория → рекомендации</li><li>YouTube канал → анализ → что ещё смотреть</li><li>Фото произведения искусства → художник / эпоха → похожие</li><li>Опера / балет / филармония → контекст → что слушать дальше</li></ul>' },
+      { h: 'KB путь', files: ['/Users/bk/Work/AGENTS/Coach/KB/vibe-coder/', '/Users/bk/Work/AGENTS/Coach/KB/entrepreneur/', '/Users/bk/Work/AGENTS/Coach/KB/investor/', '/Users/bk/Work/AGENTS/Coach/KB/culture/'] },
+      { h: 'Кнопки действий', body: '[✅ Сохранить в KB] [📚 Рекомендации] [🗺 Показать ЗБР-карту]' }
+    ]
+  },
+  'agent-cfo': {
+    title: 'CFO — Chief Financial Officer',
+    status: '🟡 Designing — Phase 1 build pending',
+    sections: [
+      { h: 'Роль', body: 'Финансовый директор. Думает рисками, аллокацией, временным горизонтом. Знает долгосрочные цели Бориса.' },
+      { h: 'Портфель', body: '<ul><li>📈 Акции (публичные)</li><li>₿ Крипто</li><li>🏦 Облигации / недвижимость</li><li>🚀 Венчурные инвестиции</li></ul>' },
+      { h: 'Что принимает', body: '<ul><li>Скриншот портфеля → Vision → обновляет PORTFOLIO/</li><li>PDF стартапа → due diligence анализ</li><li>Новость → влияние на позиции</li></ul>' },
+      { h: 'KB путь', files: ['/Users/bk/Work/PROJECTS/FINANCES/PORTFOLIO/', '/Users/bk/Work/PROJECTS/FINANCES/RESEARCH/'] },
+      { h: 'Кнопки действий', body: '[✅ Обновить портфель] [⚠️ Флаг риска] [📊 Показать аллокацию]' }
+    ]
+  },
+  'agent-analyst': {
+    title: 'Analyst — Research & Intelligence',
+    status: '🟡 Designing — Phase 1 build pending',
+    sections: [
+      { h: 'Роль', body: 'Исследователь и разведчик. Собирает входящую информацию и анализирует как она влияет на проекты, контакты, инвестиции, развитие.' },
+      { h: 'Стандарты ресёрча', body: '<ul><li>Первичные источники > вторичных</li><li>Дата обязательна на каждом факте</li><li>Минимум 2 независимых подтверждения</li><li>Формат: Факт | Источник | Дата | Релевантность</li></ul>' },
+      { h: 'Инструменты', body: '<ul><li><b>EXA</b> — семантический поиск идей/компаний/людей</li><li><b>Explee</b> — B2B обогащение контактов</li><li><b>Parallel AI</b> — глубокий ресёрч (>50K токенов)</li><li><b>Firecrawl</b> — скрейпинг сайтов</li></ul>' },
+      { h: 'Проактивный режим', body: 'В start-day флагует: новости → NGED грант-цикл, контакты → timing, крипто-сигналы → CFO, AI фреймворки → CTO + Coach.' },
+      { h: 'Кнопки действий', body: '[✅ Сохранить ресёрч] [📤 Переслать агенту] [🔍 Углубить]' }
+    ]
+  },
+  'myteam-telegram': {
+    title: 'Telegram Bot Interface',
+    status: '🟡 Designing — Phase 1 build pending',
+    sections: [
+      { h: 'Бот', body: '@ReelsFacBot (токен уже в .env)' },
+      { h: 'Стек', body: 'python-telegram-bot v21 (async) + anthropic SDK + SQLite (сессии)' },
+      { h: 'Режимы', body: '<ul><li><b>Single agent</b> — /menu → выбрать → чат с агентом</li><li><b>My Team</b> — /team + вопрос → 6 агентов параллельно → CEO валидирует → синтез</li></ul>' },
+      { h: 'Intake types', body: '<ul><li>Текст → агент обрабатывает</li><li>Фото / скриншот → Vision (Opus) → classify → KB</li><li>PDF / документ → парсинг → структурирование</li></ul>' },
+      { h: 'My Team output', body: 'Консенсус / Рекомендация / Decision Filter / 🚩 Флаги / Кнопки действий' },
+      { h: 'Модели', body: 'CEO + My Team: Opus · Одиночные агенты: Sonnet' },
+      { h: 'Хостинг', body: 'Локально на Mac (пока). Upgrade → Railway/Replit для 24/7.' },
+      { h: 'Файлы (будут созданы)', files: ['/Users/bk/Work/AGENTS/', '/Users/bk/Work/AGENTS/bot.py', '/Users/bk/Work/AGENTS/dispatcher.py'] }
     ]
   }
 };
