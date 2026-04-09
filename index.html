@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boris OS — System Map</title>
+<title>Boris OS — System Map v2 (2026-04-09)</title>
 <style>
   :root {
     --bg: #0d1117;
@@ -420,7 +420,7 @@
 <div class="header">
   <div class="header-left">
     <h1>⬡ Boris OS — System Map</h1>
-    <p>North Star 2026: £300K/year — Strategic Architect</p>
+    <p>North Star 2026: £300K/year — Strategic Architect · v2 · 2026-04-09</p>
   </div>
   <div class="header-right">
     <span class="legend-dot"><span class="dot" style="background:var(--green);box-shadow:0 0 5px var(--green)"></span> Active</span>
@@ -443,12 +443,12 @@
 
 <!-- STATS -->
 <div class="stats-row">
-  <div class="stat stat-green"><span class="stat-value">4</span><span class="stat-label">Active Skills</span></div>
+  <div class="stat stat-green"><span class="stat-value">7</span><span class="stat-label">Active Skills</span></div>
   <div class="stat stat-yellow"><span class="stat-value">2</span><span class="stat-label">Paused Projects</span></div>
-  <div class="stat stat-blue"><span class="stat-value">3</span><span class="stat-label">New Skills</span></div>
+  <div class="stat stat-blue"><span class="stat-value">2</span><span class="stat-label">New Skills</span></div>
   <div class="stat"><span class="stat-value">33</span><span class="stat-label">TG Channels</span></div>
   <div class="stat"><span class="stat-value">3</span><span class="stat-label">Email Accounts</span></div>
-  <div class="stat"><span class="stat-value">14</span><span class="stat-label">MCP Servers</span></div>
+  <div class="stat"><span class="stat-value">3</span><span class="stat-label">Custom MCPs</span></div>
   <div class="stat"><span class="stat-value">Sonnet</span><span class="stat-label">Default Model</span></div>
 </div>
 
@@ -712,50 +712,130 @@
           <span class="tag">MODEL_ROUTING.md</span>
         </div>
       </div>
+      <div class="card" onclick="openPanel('session-token-hygiene')">
+        <div class="card-header">
+          <span class="card-title">Session Token Hygiene</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Compact at ~60% (not 95%). Preserve working context, flush filler. Cut cost per session.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">"60% context"</span>
+          <span class="tag">Nate Herk / Apr 2026</span>
+          <span class="tag tag-leverage">⚙️ NEW</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('mcp-output-discipline')">
+        <div class="card-header">
+          <span class="card-title">MCP Output Discipline</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Disable idle MCP servers. Narrow shell commands. Write big outputs to file. Cut invisible token load.</div>
+        <div class="card-tags">
+          <span class="tag tag-trigger">"tokens from tools"</span>
+          <span class="tag">MCP toggle rule</span>
+          <span class="tag tag-leverage">⚙️ NEW</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('mcp-builder')">
+        <div class="card-header">
+          <span class="card-title">Custom MCP Builder</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Building 3 custom MCPs: gdrive-mcp, python-standalone, telegram-mcp. Under PROJECTS/MCPs/.</div>
+        <div class="card-tags">
+          <span class="tag">PROJECTS/MCPs/</span>
+          <span class="tag tag-leverage">⚙️ LEVERAGE</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- LAYER: ADVISORY & PLANNING (NEW) -->
+  <!-- LAYER: AAS CLIENT PIPELINE -->
   <div class="layer">
     <div class="layer-header">
-      <span class="layer-title">Advisory &amp; Planning (New)</span>
+      <span class="layer-title">AAS Client Pipeline</span>
+      <div class="layer-line"></div>
+    </div>
+    <div class="cards">
+      <div class="card project-card" onclick="openPanel('aas-positioning')">
+        <div class="card-header">
+          <span class="card-title">Fractional CAIO Role</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">AAS now positioned as Fractional Chief AI Officer for SMBs. £3k–£15k project band. Russian-language advantage channel.</div>
+        <div class="card-tags">
+          <span class="tag tag-money">💰 MONEY</span>
+          <span class="tag">marketing-context.md</span>
+          <span class="tag">Apr 2026</span>
+        </div>
+      </div>
+      <div class="card project-card" onclick="openPanel('wix-outreach')">
+        <div class="card-header">
+          <span class="card-title">Wix Outreach Pipeline</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Target Wix-based luxury businesses. Flow: HTML mock-up → QA gate → personalised outreach email. Au Tango Boudoir done.</div>
+        <div class="card-tags">
+          <span class="tag tag-money">💰 MONEY</span>
+          <span class="tag">EU/UK/ME batch</span>
+          <span class="tag">wix-outreach/</span>
+        </div>
+      </div>
+      <div class="card" onclick="openPanel('skill-from-transcript')">
+        <div class="card-header">
+          <span class="card-title">Skill-from-Transcript</span>
+          <span class="status-badge status-new"></span>
+        </div>
+        <div class="card-desc">Extract reusable Claude skills from YouTube creator transcripts. First: Nate Herk → session-token-hygiene + mcp-discipline.</div>
+        <div class="card-tags">
+          <span class="tag">skills-drafts/</span>
+          <span class="tag tag-leverage">⚙️ LEVERAGE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAYER: ADVISORY & PLANNING -->
+  <div class="layer">
+    <div class="layer-header">
+      <span class="layer-title">Advisory &amp; Planning</span>
       <div class="layer-line"></div>
     </div>
     <div class="cards">
       <div class="card" onclick="openPanel('advisory-board')">
         <div class="card-header">
           <span class="card-title">Advisory Board</span>
-          <span class="status-badge status-new"></span>
+          <span class="status-badge status-active"></span>
         </div>
         <div class="card-desc">4 parallel expert sub-agents: Strategic Architect, Commercial Director, Domain Analyst-Researcher, Product Critic.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">"advisory board"</span>
           <span class="tag tag-model">Opus</span>
-          <span class="tag tag-leverage">⚙️ NEW</span>
+          <span class="tag tag-leverage">⚙️ LEVERAGE</span>
         </div>
       </div>
       <div class="card" onclick="openPanel('weekly-rhythm')">
         <div class="card-header">
           <span class="card-title">Weekly Rhythm</span>
-          <span class="status-badge status-new"></span>
+          <span class="status-badge status-active"></span>
         </div>
         <div class="card-desc">Structured retro + planning. Sources: project states, start-day output. No GitHub dependency.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">"weekly review"</span>
           <span class="tag">MONEY › LEVERAGE filter</span>
-          <span class="tag tag-leverage">⚙️ NEW</span>
+          <span class="tag tag-leverage">⚙️ LEVERAGE</span>
         </div>
       </div>
       <div class="card" onclick="openPanel('cc-analytics')">
         <div class="card-header">
           <span class="card-title">Usage Analytics</span>
-          <span class="status-badge status-new"></span>
+          <span class="status-badge status-active"></span>
         </div>
         <div class="card-desc">HTML report from Claude history. Project breakdown + cost estimate per project.</div>
         <div class="card-tags">
           <span class="tag tag-trigger">"cc analytics"</span>
           <span class="tag">~/.claude/history.jsonl</span>
-          <span class="tag tag-leverage">⚙️ NEW</span>
+          <span class="tag tag-leverage">⚙️ LEVERAGE</span>
         </div>
       </div>
     </div>
@@ -895,11 +975,14 @@ const data = {
   },
   'aas': {
     title: 'AI Automation Studio',
-    status: '🟢 Active',
+    status: '🟢 Active — Fractional CAIO positioning Apr 2026',
     sections: [
       { h: 'Goal', body: 'AI chatbots and automation for UK/EU SMB clients. Retainers + project fees. Primary revenue engine.' },
+      { h: 'Positioning', body: '<b>Fractional Chief AI Officer (CAIO)</b> — external AI director for SMBs. Owns roadmap, leads pilots, delivers automations.' },
+      { h: 'Fee band', body: '£3,000 – £15,000 per project (confirmed). Scoped via 20-min discovery call.' },
+      { h: 'Design system', body: 'Apple-inspired. Primary: #007AFF. Text: #1D1D1F. See Design.md.' },
       { h: 'Email', body: 'boris.korol@ai-automation.studio (gmail MCP)' },
-      { h: 'Logo rule', files: ['/Users/bk/Work/.cursor/rules/ai-automation-logo.mdc'] }
+      { h: 'Key files', files: ['/Users/bk/Work/PROJECTS/AI-Automation/marketing-context.md', '/Users/bk/Work/PROJECTS/AI-Automation/Design.md', '/Users/bk/Work/.cursor/rules/ai-automation-logo.mdc'] }
     ]
   },
   'healthcopilot': {
@@ -955,7 +1038,7 @@ const data = {
   },
   'advisory-board': {
     title: 'Advisory Board',
-    status: '🔵 New skill — to be created',
+    status: '🟢 Active — ~/.claude/skills/advisory-board/',
     sections: [
       { h: 'Concept', body: 'Adapted from serejaris/ris-claude-code ceo-council. Launches 4 parallel expert sub-agents, each analyses the same decision independently, then synthesises.' },
       { h: 'Roles', body: '<ul><li><b>Strategic Architect</b> — systems, structure, long-term</li><li><b>Commercial Director</b> — revenue, pricing, client pipeline</li><li><b>Domain Analyst-Researcher</b> — dynamic: becomes deep expert in project domain (EdTech for NGED, MarTech for AAS, etc.)</li><li><b>Product Critic</b> — challenges assumptions, finds flaws</li></ul>' },
@@ -966,7 +1049,7 @@ const data = {
   },
   'weekly-rhythm': {
     title: 'Weekly Rhythm',
-    status: '🔵 New skill — to be created',
+    status: '🟢 Active — ~/.claude/skills/weekly-rhythm/',
     sections: [
       { h: 'Concept', body: 'Adapted from serejaris weekly-retro + weekly-planning. No GitHub dependency.' },
       { h: 'Sources', body: '<ul><li>Project _STATE.md files</li><li>Start the Day output cache</li><li>OPERATING/REFLECTIONS/</li><li>MEMORY.md</li></ul>' },
@@ -976,12 +1059,77 @@ const data = {
   },
   'cc-analytics': {
     title: 'Usage Analytics',
-    status: '🔵 New skill — to be created',
+    status: '🟢 Active — ~/.claude/skills/cc-analytics/',
     sections: [
-      { h: 'Concept', body: 'Adapted from serejaris cc-analytics. Parses ~/.claude/history.jsonl, generates HTML report.' },
-      { h: 'Additions vs original', body: '<ul><li>Project-specific breakdown (NGED / AAS / ReelsFactory)</li><li>Cost estimate ($) per project</li><li>Haiku vs Sonnet vs Opus split</li></ul>' },
+      { h: 'Concept', body: 'Parses ~/.claude/history.jsonl, generates HTML report.' },
+      { h: 'Additions', body: '<ul><li>Project-specific breakdown (NGED / AAS / ReelsFactory)</li><li>Cost estimate ($) per project</li><li>Haiku vs Sonnet vs Opus split</li></ul>' },
       { h: 'Source', body: '~/.claude/history.jsonl' },
       { h: 'Trigger', body: '"cc analytics", "статистика", "сколько я трачу"' }
+    ]
+  },
+  'session-token-hygiene': {
+    title: 'Session Token Hygiene',
+    status: '🔵 New skill — active',
+    sections: [
+      { h: 'Rule', body: 'Compact at ~55–65% utilisation (not 95%). Check with /context or status line.' },
+      { h: 'How to compact', body: '<ul><li>Run /compact before hitting 95%</li><li>Pre-compaction: write a "working state" note (current goal, next 3 actions, key decisions)</li><li>Post-compaction: verify Claude recalls the goal</li></ul>' },
+      { h: 'Structural habits', body: '<ul><li>One task per session — start /clear for unrelated work</li><li>Reference files not paste — use file paths instead of copying code into chat</li><li>Avoid re-asking questions answered earlier in session</li></ul>' },
+      { h: 'Source', body: 'Nate Herk — 18 Claude Code Token Hacks (YouTube, Apr 2026)' },
+      { h: 'Skill file', files: ['/Users/bk/Work/.cursor/skills/session-token-hygiene/SKILL.md'] }
+    ]
+  },
+  'mcp-output-discipline': {
+    title: 'MCP Output Discipline',
+    status: '🔵 New skill — active',
+    sections: [
+      { h: 'MCP rule', body: '<ul><li>Disable servers not needed for current task (both IDEs)</li><li>Prefer narrow tool sets or CLI for heavy integrations</li><li>Each active MCP re-injects schema each turn</li></ul>' },
+      { h: 'Shell output rule', body: '<ul><li>Narrow flags before running noisy commands (--oneline, -n, filters)</li><li>Write large output to file, reference path instead of pasting into chat</li><li>Use deny lists for known-noisy commands</li></ul>' },
+      { h: 'Source', body: 'Nate Herk transcript — MCP definitions re-injected each turn' },
+      { h: 'Skill file', files: ['/Users/bk/Work/.cursor/skills/mcp-output-token-discipline/SKILL.md'] }
+    ]
+  },
+  'mcp-builder': {
+    title: 'Custom MCP Builder',
+    status: '🔵 New — in progress',
+    sections: [
+      { h: 'Goal', body: 'Build custom MCP servers for Boris OS to tighten integrations and reduce token overhead.' },
+      { h: 'In progress', body: '<ul><li><b>gdrive-mcp</b> — direct GDrive access without heavy Firecrawl</li><li><b>python-standalone</b> — run Python snippets as tools</li><li><b>telegram-mcp</b> — custom Telegram integration</li></ul>' },
+      { h: 'Path', files: ['/Users/bk/Work/PROJECTS/MCPs/'] },
+      { h: 'Skill', body: 'mcp-builder skill in .cursor/skills/mcp-builder/' }
+    ]
+  },
+  'aas-positioning': {
+    title: 'Fractional CAIO Positioning',
+    status: '🔵 New — formalised Apr 2026',
+    sections: [
+      { h: 'What it means', body: 'AAS acts as an external "Chief AI Officer" for SMBs — owns AI roadmap, leads pilots, and delivers automation. Not just strategy, not just tech.' },
+      { h: 'Fee band', body: '£3,000 – £15,000 per project (confirmed by owner). Not a public price list — negotiate per scope.' },
+      { h: 'Target', body: 'Founders / ops leads / COOs drowning in manual work. UK/EU/ME markets.' },
+      { h: 'Russian-language channel', body: 'Separate messaging track for Russian-speaking audience (WhatsApp/IG segments).' },
+      { h: 'Forbidden claims', body: 'No guaranteed ROI %. No "fully autonomous AI employees". No EU AI Act compliance guarantees.' },
+      { h: 'Source', files: ['/Users/bk/Work/PROJECTS/AI-Automation/marketing-context.md'] }
+    ]
+  },
+  'wix-outreach': {
+    title: 'Wix Outreach Pipeline',
+    status: '🔵 New — first mock-up: Au Tango Boudoir',
+    sections: [
+      { h: 'Workflow', body: '<ol><li>Identify Wix-based luxury business (EU/UK/ME batch via Apify)</li><li>Generate personalised HTML mock-up — shows how their site could look with AI chat + lead capture</li><li>QA gate — check all links, responsiveness, copy</li><li>Send outreach email with live Gist preview link</li></ol>' },
+      { h: 'First proof', body: 'Au Tango Boudoir — luxury boudoir photography (Paris). HTML mock-up done. Public preview via GitHub Gist.' },
+      { h: 'Config', body: 'config.eu_uk_me_batch.json — EU/UK/ME market batch targeting' },
+      { h: 'Copy', body: 'copy-en.md — outreach copy template (EN-GB)' },
+      { h: 'Path', files: ['/Users/bk/Work/PROJECTS/AI-Automation/wix-outreach/'] },
+      { h: 'Commands', cmds: ['cd /Users/bk/Work/PROJECTS/AI-Automation/wix-outreach', 'cat WORKFLOW.md'] }
+    ]
+  },
+  'skill-from-transcript': {
+    title: 'Skill-from-Transcript Pattern',
+    status: '🔵 New — established Apr 2026',
+    sections: [
+      { h: 'Pattern', body: 'Watch/transcript a YouTube creator → extract key operational insights → author a Claude/Cursor skill → add to OS.' },
+      { h: 'First run', body: 'Nate Herk — "18 Claude Code Token Hacks" → produced 2 skills: session-token-hygiene + mcp-output-token-discipline' },
+      { h: 'Source transcript', files: ['/Users/bk/Work/PROJECTS/AI-Automation/skills-drafts/nate-herk-from-transcript/'] },
+      { h: 'Tool', body: 'yt-dlp → Whisper → transcript → skill authoring via skill-creator' }
     ]
   }
 };
